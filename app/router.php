@@ -49,7 +49,7 @@
             if (file_exists($route_file)) {
                 include ($route_file);
             } else {
-                redirect_404();
+                redirect("404");
             }
         }
     } else {
@@ -74,7 +74,7 @@
         }
     
         if ($ext != "php") {
-            redirect_404();
+            redirect("404");
         }
     
         $view_file = dirname(__FILE__) . "/../views" . $path . $name . "." . $ext;
@@ -82,7 +82,7 @@
         if (file_exists($view_file)) {
             include ($view_file);
         } else {
-            redirect_404();
+            redirect("404");
         }
     }
 ?>
