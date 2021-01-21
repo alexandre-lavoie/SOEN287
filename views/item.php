@@ -14,7 +14,7 @@
         <nav class="bg-dark pt-3 pb-1">
             <ol class="d-flex justify-content-center breadcrumb">
                 <li class="text-white breadcrumb-item"><a href="/">Home</a></li>
-                <li class="text-white breadcrumb-item"><a href="/aisle?id=0">Aisle</a></li>
+                <li class="text-white breadcrumb-item"><a href="/aisle?id=1">Aisle</a></li>
                 <li class="text-white breadcrumb-item active"><?= $item->name ?></li>
             </ol>
         </nav>
