@@ -2,7 +2,9 @@
     /**
      * 
      */
+?>
 
+<?php
     $message = 0;
 
     if($_GET["success"] == 1) {

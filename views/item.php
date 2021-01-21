@@ -1,7 +1,7 @@
 <?php
     include_once("../models/item.php");
 
-    $item = Item::get_samples()[$_GET["id"]];
+    $item = Item::get_samples()[$_GET["id"] - 1];
 ?>
 
 <html lang="en">

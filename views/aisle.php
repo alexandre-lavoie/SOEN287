@@ -1,7 +1,7 @@
 <?php
     include("../models/aisle.php");
 
-    $aisle = Aisle::get_samples()[$_GET["id"]];
+    $aisle = Aisle::get_samples()[$_GET["id"] - 1];
 
     $items = $aisle->items;
 ?>
