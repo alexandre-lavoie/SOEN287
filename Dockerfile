@@ -19,6 +19,8 @@ RUN { \
 COPY ./docker/nginx.conf /etc/nginx.conf.template
 COPY ./docker/entrypoint.sh /etc/entrypoint.sh
 
+COPY . /www
+
 RUN ["chmod", "+x", "/etc/entrypoint.sh"]
 
 CMD /bin/bash -c "envsubst '\$PORT' < /etc/nginx.conf.template > /etc/nginx/sites-enabled/default" && /etc/entrypoint.sh
