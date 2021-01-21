@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  web:
+    container_name: soen287-web
+    ports:
+      - "80:80"
+    environment:
+      PORT: 80
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - soen287-network
+    volumes:
+      - ./app:/www/app
+      - ./components:/www/components
+      - ./models:/www/models
+      - ./public:/www/public
+      - ./routes:/www/routes
+      - ./views:/www/views
+      - ./errors:/www/errors
+  
+networks:
+  soen287-network:
+    driver: bridge
