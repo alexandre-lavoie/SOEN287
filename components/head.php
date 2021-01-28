@@ -24,6 +24,23 @@
     a:hover {
         color: #157347;
     }
+
+    .table th {
+        text-align: center;   
+    }
+
+    .table td {
+        vertical-align: middle;
+        text-align: center;   
+    }
+
+    .nav-link {
+        color: black;
+    }
+
+    .nav-link.active {
+        color: #198754;
+    }
 </style>
 
 <?php 

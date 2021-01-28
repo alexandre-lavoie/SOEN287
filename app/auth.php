@@ -2,7 +2,7 @@
     include_once(dirname(__FILE__) . "/router.php");
 
     function requires_admin() {
-        redirect("401");
+        // redirect("401");
     }
 
     function attempt_login() {

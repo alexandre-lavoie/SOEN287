@@ -77,12 +77,18 @@
             redirect("404");
         }
     
-        $view_file = dirname(__FILE__) . "/../views" . $path . $name . "." . $ext;
+        $view_file = dirname(__FILE__) . "/../views/" . $path . $name . "." . $ext;
 
         if (file_exists($view_file)) {
             include ($view_file);
         } else {
-            redirect("404");
+            $view_file = dirname(__FILE__) . "/../views/" . $path . $name . "/" . "index.php"; 
+
+            if (file_exists($view_file)) {
+                include ($view_file);
+            } else {
+                redirect("404");
+            }
         }
     }
 ?>

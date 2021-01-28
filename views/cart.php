@@ -30,7 +30,7 @@
         <?php include("../components/header.php") ?>
 
         <div class="p-3 bg-dark text-white">
-            <h2>My Cart</h2>
+            <span>My Cart</span>
         </div>
 
         <section class="p-2" style="min-height: 76vh">
