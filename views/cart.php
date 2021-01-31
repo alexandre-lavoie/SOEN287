@@ -54,7 +54,9 @@
                         <span>GST: $<?= number_format($gst, 2) ?></span>
                         <hr />
                         <h5 class="pb-2">Total: $<?= number_format($total, 2) ?></h5>
-                        <button class="btn btn-success">Checkout</button>
+                        <a href="/">
+                            <button class="btn w-100 btn-success">Checkout</button>
+                        </a>
                     </div>
                 </div>
             </div>

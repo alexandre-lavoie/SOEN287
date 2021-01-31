@@ -21,7 +21,9 @@
                 <div class="col-12 col-md-8 col-lg-10 pb-2">
                     <div class="card p-2 mb-2">
                         <input class="form-control" placeholder="Search" />
-                        <button class="btn btn-success mt-2">Create</button>
+                        <a class="mt-2 no-dec" href="/backstore/account">
+                            <button class="btn btn-success" style="width: 100%">Create</button>
+                        </a>
                     </div>
                     <div class="card p-2">
                         <div class="table-responsive">
@@ -44,7 +46,14 @@
                                             <td><?= explode(" ", $account->name)[1] ?></td>
                                             <td><?= $account->email ?></td>
                                             <td><?= $account->address ?></td>
-                                            <td><button class="m-2 btn btn-success">Edit</button><button class="btn btn-danger">Delete</button></td>
+                                            <td>
+                                                <a class="m-2 no-dec" href="/backstore/account?id=<?= $account->id ?>">
+                                                    <button class="btn btn-success">Edit</button>
+                                                </a>
+                                                <a class="no-dec" href="/backstore/account?id=<?= $account->id ?>">
+                                                    <button class="btn btn-danger">Delete</button>
+                                                </a>
+                                            </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>

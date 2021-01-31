@@ -32,8 +32,10 @@
 
                         <label for="password" class="pt-3 pb-2">Password</label>
                         <input name="password" type="password" id="password" class="form-control" required="">
-
+                        
                         <hr />
+
+                        <input type="reset" class="btn mb-2 btn-warning" value="Reset"/>
 
                         <button class="btn btn-success">Signup</button>
                     </form>

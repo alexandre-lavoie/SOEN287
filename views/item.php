@@ -38,6 +38,7 @@
                                 include("../components/quantity-selector.php")
                             ?>
                             <br />
+                            <button class="btn btn-dark mb-2">More Description</button>
                             <button class="btn btn-success" onclick="location.href = '/cart';"><i class="bi bi-cart2"></i> Add</button>
                         </div>
                     </div>

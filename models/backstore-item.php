@@ -15,10 +15,6 @@
         static function get_samples() {
             $items = Item::get_samples();
 
-            shuffle($items);
-
-            $items = array_slice($items, 0, random_int(1, sizeof($items)));
-
             $backstore_items = [];
 
             for($i = 0; $i < sizeof($items); $i++) {
