@@ -19,6 +19,7 @@ services:
       - ./public:/www/public
       - ./routes:/www/routes
       - ./views:/www/views
+      - ./db:/www/db
       - ./errors:/www/errors
   
 networks:
