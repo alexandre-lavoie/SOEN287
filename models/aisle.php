@@ -1,27 +1,41 @@
 <?php
-    include_once(dirname(__FILE__) . "/item.php");
+    include_once(dirname(__FILE__) . "/itemstack.php");
 
     class Aisle {
         public $id;
         public $name;
         public $description;
         public $image;
-        public $items;
+        public $itemstacks;
 
-        function __construct($id, $name, $description, $image, $items) {
+        function __construct($id, $name, $description, $image, $itemstacks) {
             $this->id = $id;
             $this->name = $name;
             $this->description = $description;
             $this->image = $image;
-            $this->items = $items;
+            $this->itemstacks = $itemstacks;
         }
 
-        static function get_samples() {
-            return [
-                new Aisle(1, "Fruits and Vegetables", "An assortment of fresh and healthy foods.", "/public/images/pexels-ponyo-sakana-4194610.jpg", Item::get_samples()),
-                new Aisle(2, "Barbecue", "Everything you can need for the great outdoor.", "/public/images/pexels-skitterphoto-1105325.jpg", Item::get_samples()),
-                new Aisle(3, "Sugary Foods", "A selection of the best sweets around.", "/public/images/pexels-elli-1854652.jpg", Item::get_samples())
-            ];
+        public static function fromXML($xml) {
+            return new Aisle(
+                (string) $xml['id'],
+                (string) $xml->name,
+                (string) $xml->description,
+                (string) $xml->image,
+                ItemStack::fromXMLList($xml->itemstacks)
+            );
+        }
+
+        public function asXML() {
+            $xml = simplexml_load_string("<xml><aisle></aisle></xml>");
+
+            $xml->aisle->addAttribute('id', $this->id);
+            $xml->aisle->addChild('name', $this->name);
+            $xml->aisle->addChild('description', $this->description);
+            $xml->aisle->addChild('image', $this->image);
+            simplexml_append($xml->aisle, ItemStack::asXMLList($this->itemstacks));
+
+            return $xml;
         }
     }
 ?>

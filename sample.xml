@@ -46,7 +46,11 @@
             <description>An assortment of fresh and healthy foods.</description>
             <image>/public/images/pexels-ponyo-sakana-4194610.jpg</image>
             <items>
-                <item>1</item>
+                <itemstack>
+                    <id>1</id>
+                    <item>1</item>
+                    <quantity>10</quantity>
+                </itemstack>
             </items>
         </aisle>
     </aisles>
@@ -64,13 +68,6 @@
             <image>/public/images/pexels-anna-shvets-3962285.jpg</image>
         </splash>
     </splashes>
-    <backstore>
-        <itemstack>
-            <id>1</id>
-            <item>1</item>
-            <quantity>10</quantity>
-        </itemstack>
-    </backstore>
     <orders>
         <order>
             <id>1</id>

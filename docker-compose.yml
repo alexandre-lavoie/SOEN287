@@ -20,6 +20,7 @@ services:
       - ./routes:/www/routes
       - ./views:/www/views
       - ./db:/www/db
+      - ./utils:/www/utils
       - ./errors:/www/errors
   
 networks:

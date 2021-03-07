@@ -12,11 +12,24 @@
             $this->image = $image;
         }
 
-        static function get_samples() {
-            return [
-                new SplashImage(1, "Welcome to WeEatOnline", "The best online-grocery website!", "/public/images/pexels-pixabay-264636.jpg"),
-                new SplashImage(2, "Tired of In-Person Pickup?", "Try us and you'll never go back!", "/public/images/pexels-anna-shvets-3962285.jpg")
-            ];
+        public static function fromXML($xml) {
+            return new SplashImage(
+                (string)$xml['id'],
+                (string)$xml->name,
+                (string)$xml->description,
+                (string)$xml->image
+            );
+        }
+
+        public function asXML() {
+            $xml = simplexml_load_string("<xml><splash></splash></xml>");
+
+            $xml->splash->addAttribute('id', $this->id);
+            $xml->splash->addChild('name', $this->name);
+            $xml->splash->addChild('description', $this->description);
+            $xml->splash->addChild('image', $this->image);
+
+            return $xml;
         }
     }
 ?>

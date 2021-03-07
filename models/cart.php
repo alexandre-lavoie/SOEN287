@@ -1,27 +1,29 @@
 <?php
+    include_once(dirname(__FILE__) . "/itemstack.php");
+
     class Cart {
         public $id;
-        public $items;
+        public $itemstacks;
 
-        function __construct($id, $items) {
+        function __construct($id, $itemstacks) {
             $this->id = $id;
-            $this->items = $items;
+            $this->itemstacks = $itemstacks;
         }
 
-        /**
-         * TODO: Return non-null cart.
-         */
+        public static function fromXML($xml) {
+            return new Cart(
+                (string) $xml['id'],
+                ItemStack::fromXMLList($xml->itemstacks)
+            );
+        }
+
         public function asXML() {
             $xml = simplexml_load_string("<xml><cart></cart></xml>");
 
-            return $xml;
-        }
+            $xml->cart->addAttribute('id', $this->id);
+            simplexml_append($xml->cart, ItemStack::asXMLList($xml->itemstacks));
 
-        /**
-         * TODO: Return non-null cart.
-         */
-        public static function fromXML($xml) {
-            return new Cart(0, []);
+            return $xml;
         }
     }
 ?>
