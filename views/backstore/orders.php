@@ -1,7 +1,17 @@
 <?php
-    include(dirname(__FILE__) . "/../../models/order.php");
+    include(dirname(__FILE__) . "/../../db/order.php");
 
-    $orders = Order::get_samples();
+    $json = OrderData::_GET();
+    $orders = $json->orders;
+    $accounts = $json->accounts;
+
+    if(isset($_POST['delete'])) {
+        $id = $_POST['delete'];
+
+        if(OrderData::delete($id)) {
+            unset($orders[$id]);
+        }
+    }
 ?>
 
 <?php requires_admin() ?>
@@ -41,14 +51,16 @@
                                         <tr>
                                             <td><?= $order->id?></td>
                                             <td><?= $order->time?></td>
-                                            <td><?= $order->account->address?></td>
+                                            <td><?= $accounts[$order->account]->address?></td>
                                             <td>
                                                 <a class="m-2 no-dec" href="/backstore/order?id=<?= $order->id ?>">
-                                                    <button class="btn btn-success">Edit</button>
+                                                    <button type="button" class="btn btn-success">Edit</button>
                                                 </a>
-                                                <a class="no-dec" href="/backstore/order?id=<?= $order->id ?>">
+
+                                                <form method="POST">
+                                                    <input id="delete" name="delete" type="hidden" value="<?= $order->id ?>"/>
                                                     <button class="btn btn-danger">Delete</button>
-                                                </a>
+                                                </form>
                                             </td>
                                         </tr>
                                     <?php } ?>

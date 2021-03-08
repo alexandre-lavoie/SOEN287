@@ -5,6 +5,10 @@
 
     include_once(dirname(__FILE__) . "/json.php");
 
+    function get_base_url() {
+        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://") . $_SERVER["HTTP_HOST"];
+    }
+
     function get_error_path($error) {
         if($error == "404") {
             return dirname(__FILE__) . '/../errors/404.php';
@@ -21,10 +25,12 @@
         if(!is_null($error_path)) {
             include($error_path);
 
-            return;
+            die();
         }
+        
+        header('Location: ' . get_base_url() . $path);
 
-        echo "<script>window.location.href = '$path'</script>";
+        die();
     }
 
     function route($uri) {
@@ -69,6 +75,8 @@
             if ($name == "") {
                 $name = "index";
             }
+
+            global $PAGE_TITLE, $APP_NAME;
 
             $PAGE_TITLE = ucfirst($name) . " | " . $APP_NAME;
         

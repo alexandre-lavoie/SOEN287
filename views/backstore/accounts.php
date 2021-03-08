@@ -1,7 +1,7 @@
 <?php
-    include(dirname(__FILE__) . "/../../models/account.php");
+    include(dirname(__FILE__) . "/../../db/account.php");
 
-    $accounts = Account::get_samples();
+    $accounts = array_values(AccountData::find());
 ?>
 
 <?php requires_admin() ?>

@@ -1,11 +1,10 @@
-<?php
-    include(dirname(__FILE__) . "/../../models/backstore-item.php");
-
-    $backstore_items = BackstoreItem::get_samples();
-    $backstore_item = $backstore_items[$_GET['id'] - 1];
-?>
-
 <?php requires_admin() ?>
+
+<?php
+    include(dirname(__FILE__) . "/../../db/item.php");
+
+    $item = current(ItemData::find([$_GET['id']]));
+?>
 
 <html lang="en">
     <head>
@@ -24,9 +23,15 @@
                         <h2>Product Editor</h2>
 
                         <form class="mb-0" method="POST">
+                            <input 
+                                id="id"
+                                name="id"
+                                type="hidden" 
+                                value="<?= $_GET['id'] ?>" 
+                            />
                             <label for="image" class="pb-2">Image</label>
                             <input 
-                                value="<?= $backstore_item->item->image ?>" 
+                                value="<?= $item->image ?>" 
                                 name="image" 
                                 type="url" 
                                 id="image" 
@@ -36,21 +41,10 @@
                             >
                             <label for="name" class="pb-2 pt-2">Name</label>
                             <input 
-                                value="<?= $backstore_item->item->name ?>" 
+                                value="<?= $item->name ?>" 
                                 name="name" 
                                 type="name" 
                                 id="name" 
-                                class="form-control" 
-                                required="" 
-                                autofocus=""
-                            >
-                            <label for="quantity" class="pb-2 pt-2">Quantity</label>
-                            <input 
-                                value="<?= $backstore_item->quantity ?>" 
-                                name="quantity" 
-                                type="number" 
-                                id="quantity" 
-                                min="0"
                                 class="form-control" 
                                 required="" 
                                 autofocus=""

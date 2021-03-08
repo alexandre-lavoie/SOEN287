@@ -1,11 +1,10 @@
-<?php
-    include(dirname(__FILE__) . "/../../models/account.php");
-
-    $accounts = Account::get_samples();
-    $account = $accounts[$_GET['id'] - 1];
-?>
-
 <?php requires_admin() ?>
+
+<?php
+    include(dirname(__FILE__) . "/../../db/account.php");
+
+    $account = current(AccountData::find([$_GET['id']]));
+?>
 
 <html lang="en">
     <head>
@@ -24,6 +23,12 @@
                         <h2>Account Editor</h2>
 
                         <form class="mb-0" method="POST">
+                            <input 
+                                id="id"
+                                name="id"
+                                type="hidden" 
+                                value="<?= $_GET['id'] ?>" 
+                            />
                             <label for="name" class="pb-2 pt-2">Name</label>
                             <input 
                                 value="<?= $account->name ?>" 

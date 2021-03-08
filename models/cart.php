@@ -21,7 +21,7 @@
             $xml = simplexml_load_string("<xml><cart></cart></xml>");
 
             $xml->cart->addAttribute('id', $this->id);
-            simplexml_append($xml->cart, ItemStack::asXMLList($xml->itemstacks));
+            simplexml_append($xml->cart, ItemStack::asXMLList($this->itemstacks));
 
             return $xml;
         }

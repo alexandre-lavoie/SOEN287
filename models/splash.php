@@ -1,5 +1,5 @@
 <?php
-    class SplashImage {
+    class Splash {
         public $id;
         public $name;
         public $description;
@@ -13,7 +13,7 @@
         }
 
         public static function fromXML($xml) {
-            return new SplashImage(
+            return new Splash(
                 (string)$xml['id'],
                 (string)$xml->name,
                 (string)$xml->description,

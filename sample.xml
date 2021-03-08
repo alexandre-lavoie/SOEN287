@@ -1,79 +1,69 @@
 <?xml version="1.0"?>
 <weo>
-    <accounts>
-        <account>
-            <id>1</id>
-            <email>john.doe@gmail.com</email>
-            <password>password</password>
-            <name>John Doe</name>
-            <address>1234 Street, City, Country H6Y A2Z</address>
-            <cart>1</cart>
-        </account>
-        <account>
-            <id>2</id>
-            <email>jane.doe@gmail.com</email>
-            <password>password</password>
-            <name>Jane Doe</name>
-            <address>1234 Street, City, Country H6Y A2Z</address>
-            <cart>1</cart>
-        </account>
-    </accounts>
-    <carts>
-        <cart>
-            <id>1</id>
-            <items>
-                <itemstack>
-                    <id>1</id>
-                    <item>1</item>
-                    <quantity>5</quantity>
-                </itemstack>
-            </items>
-        </cart>
-    </carts>
-    <items>
-        <item>
-            <id>1</id>
-            <name>Boneless Trimmed Chicken Breasts</name>
-            <price>8.55</price>
-            <description>1 kg - 5 Breasts per tray</description>
-            <image>https://product-images.metro.ca/images/ha1/h5f/9233873764382.jpg</image>
-        </item>
-    </items>
-    <aisles>
-        <aisle>
-            <id>1</id>
-            <name>Fruits and Vegetables</name>
-            <description>An assortment of fresh and healthy foods.</description>
-            <image>/public/images/pexels-ponyo-sakana-4194610.jpg</image>
-            <items>
-                <itemstack>
-                    <id>1</id>
-                    <item>1</item>
-                    <quantity>10</quantity>
-                </itemstack>
-            </items>
-        </aisle>
-    </aisles>
-    <splashes>
-        <splash>
-            <id>1</id>
-            <name>Welcome to WeEatOnline</name>
-            <description>The best online-grocery website!</description>
-            <image>/public/images/pexels-pixabay-264636.jpg</image>
-        </splash>
-        <splash>
-            <id>2</id>
-            <name>Tired of In-Person Pickup?</name>
-            <description>Try us and you'll never go back!</description>
-            <image>/public/images/pexels-anna-shvets-3962285.jpg</image>
-        </splash>
-    </splashes>
-    <orders>
-        <order>
-            <id>1</id>
-            <time>2021-03-06 02:56:38</time>
-            <account>1</account>
-            <cart>1</cart>
-        </order>
-    </orders>
+  <accounts>
+    <account id="1">
+      <email>john.doe@gmail.com</email>
+      <password>password</password>
+      <name>John Doe</name>
+      <address>1234 Street, City, Country H6Y A2Z</address>
+      <cart>1</cart>
+    </account>
+    <account id="2">
+      <email>jane.doe@gmail.com</email>
+      <password>password</password>
+      <name>Jane Doe</name>
+      <address>1234 Street, City, Country H6Y A2Z</address>
+      <cart>1</cart>
+    </account>
+  </accounts>
+  <carts>
+    <cart id="1">
+      <itemstacks>
+        <itemstack id="1">
+          <item>1</item>
+          <quantity>5</quantity>
+        </itemstack>
+      </itemstacks>
+    </cart>
+  </carts>
+  <items>
+    <item id="1">
+      <name>Boneless Trimmed Chicken Breasts</name>
+      <price>8.55</price>
+      <description>1 kg - 5 Breasts per tray</description>
+      <image>https://product-images.metro.ca/images/ha1/h5f/9233873764382.jpg</image>
+    </item>
+  </items>
+  <aisles>
+    <aisle id="1">
+      <name>Fruits and Vegetables</name>
+      <description>An assortment of fresh and healthy foods.</description>
+      <image>/public/images/pexels-ponyo-sakana-4194610.jpg</image>
+      <itemstacks>
+        <itemstack id="1">
+          <item>1</item>
+          <quantity>10</quantity>
+        </itemstack>
+      </itemstacks>
+    </aisle>
+  </aisles>
+  <splashs>
+    <splash id="1">
+      <name>Welcome to WeEatOnline</name>
+      <description>The best online-grocery website!</description>
+      <image>/public/images/pexels-pixabay-264636.jpg</image>
+    </splash>
+    <splash id="2">
+      <name>Tired of In-Person Pickup?</name>
+      <description>Try us and you'll never go back!</description>
+      <image>/public/images/pexels-anna-shvets-3962285.jpg</image>
+    </splash>
+  </splashs>
+  <orders>
+    <order id="1">
+      <time>2021-03-06 02:56:38</time>
+      <account>1</account>
+      <cart>1</cart>
+    </order>
+  </orders>
 </weo>

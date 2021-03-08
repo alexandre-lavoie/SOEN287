@@ -1,9 +1,15 @@
 <script>
     function increment(id) {
-        document.querySelector(`#${id}`).innerText = parseInt(document.querySelector(`#${id}`).innerText) + 1;
+        document.querySelector(`#${id}`).value = parseInt(document.querySelector(`#${id}`).value) + 1;
     }
 
     function decrement(id) {
-        document.querySelector(`#${id}`).innerText = Math.max(parseInt(document.querySelector(`#${id}`).innerText) - 1, 1);
+        document.querySelector(`#${id}`).value = Math.max(parseInt(document.querySelector(`#${id}`).value) - 1, 1);
     }
+
+    function unhide_js() {
+        document.querySelectorAll(".nojs").forEach(noJS => noJS.classList.remove('nojs'));
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => unhide_js());
 </script>

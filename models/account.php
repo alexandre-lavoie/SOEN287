@@ -1,4 +1,6 @@
 <?php
+    include_once(dirname(__FILE__) . "/../db/cart.php");
+
     class Account {
         public $id;
         public $name;
@@ -38,6 +40,14 @@
             $xml->account->addChild('cart', $this->cart);
 
             return $xml;
+        }
+
+        public function password_equals($password) {
+            return $this->password == $password;
+        }
+
+        public function new_cart() {
+            $this->cart = CartData::insert_params([CartData::next_id(), []])->id;
         }
     }
 ?>

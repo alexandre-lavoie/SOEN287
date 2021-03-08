@@ -1,11 +1,11 @@
 <?php requires_admin() ?>
 
 <?php
-    include(dirname(__FILE__) . "/../../db/order.php");
+    include(dirname(__FILE__) . "/../../db/aisle.php");
 
-    $json = OrderData::_GET([$_GET['id']]);
-    $order = current($json->orders);
-    $cart = $json->carts[$order->cart];
+    $json = AisleData::_GET([$_GET['id']]);
+    $aisle = current($json->aisles);
+    $itemstacks = $aisle->itemstacks;
     $items = $json->items;
 ?>
 
@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-12 col-md-8 col-lg-10 pb-2">
                     <div class="card p-2">
-                        <h2>Order Editor</h2>
+                        <h2>Aisle Editor</h2>
 
                         <form class="mb-0" method="POST">
                             <input 
@@ -32,32 +32,32 @@
                                 type="hidden" 
                                 value="<?= $_GET['id'] ?>" 
                             />
-                            <label for="date" class="pb-2">Date</label>
+                            <label for="image" class="pb-2">Image</label>
                             <input 
-                                value="<?= explode(" ", $order->time)[0] ?>" 
-                                name="date" 
-                                type="date" 
-                                id="date" 
+                                value="<?= $aisle->image ?>" 
+                                name="image" 
+                                type="url" 
+                                id="image" 
                                 class="form-control" 
                                 required="" 
                                 autofocus=""
                             >
-                            <label for="time" class="pb-2 pt-2">Time</label>
+                            <label for="name" class="pb-2 pt-2">Name</label>
                             <input 
-                                value="<?= explode(" ", $order->time)[1] ?>" 
-                                name="time" 
-                                type="time" 
-                                id="time" 
+                                value="<?= $aisle->name ?>" 
+                                name="name" 
+                                type="name" 
+                                id="name" 
                                 class="form-control" 
                                 required="" 
                                 autofocus=""
                             >
-                            <label for="account" class="pb-2 pt-2">Account ID</label>
+                            <label for="description" class="pb-2 pt-2">Description</label>
                             <input 
-                                value="<?= $order->account ?>" 
-                                name="account" 
-                                type="id" 
-                                id="account" 
+                                value="<?= $aisle->description ?>" 
+                                name="description" 
+                                type="description" 
+                                id="description" 
                                 class="form-control" 
                                 required="" 
                                 autofocus=""
@@ -72,7 +72,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php if($order && isset($cart->itemstacks)) { ?>
+                                        <?php if($order) { ?>
                                             <?php foreach($cart->itemstacks as $itemstack) { ?>
                                                 <tr>
                                                     <td>

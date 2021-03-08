@@ -26,7 +26,8 @@
             if(!isset($xml->itemstack)) return [];
 
             foreach($xml->itemstack as $itemstackXML) {
-                $itemstacks[] = ItemStack::fromXML($itemstackXML);
+                $itemstack = ItemStack::fromXML($itemstackXML);
+                $itemstacks[$itemstack->id] = $itemstack;
             }
 
             return $itemstacks;
@@ -46,7 +47,7 @@
             $xml = simplexml_load_string("<xml><itemstacks></itemstacks></xml>");
 
             foreach($itemstacks as $itemstack) {
-                simplexml_append($xml->itemstack, $itemstack->asXML());
+                simplexml_append($xml->itemstacks, $itemstack->asXML());
             }
 
             return $xml;

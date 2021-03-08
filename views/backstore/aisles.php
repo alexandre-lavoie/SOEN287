@@ -1,7 +1,7 @@
 <?php
-    include(dirname(__FILE__) . "/../../db/item.php");
+    include(dirname(__FILE__) . "/../../db/aisle.php");
 
-    $products = ItemData::find();
+    $aisles = array_values(AisleData::find());
 ?>
 
 <?php requires_admin() ?>
@@ -21,7 +21,7 @@
                 <div class="col-12 col-md-8 col-lg-10 pb-2">
                     <div class="card p-2 mb-2">
                         <input class="form-control" placeholder="Search" />
-                        <a class="mt-2 no-dec" href="/backstore/product">
+                        <a class="mt-2 no-dec" href="/backstore/account">
                             <button class="btn btn-success" style="width: 100%">Create</button>
                         </a>
                     </div>
@@ -33,20 +33,22 @@
                                         <th scope="col">ID</th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($products as $product) { ?>
+                                    <?php foreach($aisles as $aisle) { ?>
                                         <tr>
-                                            <td><?= $product->id ?></td>
-                                            <td><img style="max-width: 75px" src="<?= $product->image ?>"/></td>
-                                            <td><?= $product->name ?></td>
+                                            <td><?= $aisle->id ?></td>
+                                            <td><img style="max-width: 75px" src="<?= $aisle->image ?>"></td>
+                                            <td><?= $aisle->name ?></td>
+                                            <td><?= $aisle->description ?></td>
                                             <td>
-                                                <a class="m-2 no-dec" href="/backstore/product?id=<?= $product->id ?>">
+                                                <a class="m-2 no-dec" href="/backstore/aisle?id=<?= $aisle->id ?>">
                                                     <button class="btn btn-success">Edit</button>
                                                 </a>
-                                                <a class="no-dec" href="/backstore/product?id=<?= $product->id ?>">
+                                                <a class="no-dec" href="/backstore/aisle?id=<?= $aisle->id ?>">
                                                     <button class="btn btn-danger">Delete</button>
                                                 </a>
                                             </td>

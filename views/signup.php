@@ -1,9 +1,3 @@
-<?php
-    /**
-     * 
-     */
-?>
-
 <?php attempt_signup() ?>
 
 <html lang="en">
@@ -11,13 +5,11 @@
         <?php include("../components/head.php") ?>
     </head>
     <body class="bg-light">
-        <?php include("../components/header.php") ?>
-
-        <div class="d-flex justify-content-center align-items-center container" style="height: 90vh;">
+        <div class="d-flex justify-content-center align-items-center container" style="height: 100%;">
             <div class="row">
                 <div class="col">
                     <form class="card p-4" method="POST">
-                        <center class="pt-2"><h4>We Eat Online</h4></center>
+                        <center class="pt-2"><a class="text-decoration-none text-reset" style="font-size: 1.75em" href="/">WEO</a></center>
 
                         <hr />
 

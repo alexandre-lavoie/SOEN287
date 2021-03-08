@@ -74,13 +74,15 @@
 
                 if(!is_null($targets) && !in_array($instance->id, $targets)) continue;  
 
-                $instances[] = $instance;
+                $instances[$instance->id] = $instance;
             }
             
             return $instances;
         }
 
         public static function insert($instance) {
+            if(is_null($instance)) return NULL;
+
             $xml = self::get_xml();
 
             simplexml_append($xml, $instance->asXML());
@@ -92,6 +94,10 @@
 
         public static function insert_params($params) {
             $classname = static::get_classname();
+
+            if(empty($params[0]) || is_null($params[0])) {
+                $params[0] = static::next_id();
+            }
 
             return static::insert(
                 new $classname(
@@ -107,14 +113,13 @@
                 $params[] = $_POST[$param];
             }
 
-            $params[0] = static::next_id();
-
             return static::insert_params($params);
         }
 
         public static function update($instance) {
+            $singular = static::get_singular();
             $targetXML = static::get_instance_xml($instance->id)[0];
-            $sourceXML = $instance->asXML()->account;
+            $sourceXML = $instance->asXML()->{$singular};
 
             $targetDOM = dom_import_simplexml($targetXML);
             $sourceDOM = dom_import_simplexml($sourceXML);
@@ -138,8 +143,6 @@
                 $instance->{$param} = $_POST[$param]; 
             }
 
-            print_r($instance);
-
             return static::update($instance);
         }
 
@@ -161,26 +164,37 @@
             return end($instances)->id + 1;
         }
 
-        public static function route() {
-            static::{'_' . $_SERVER['REQUEST_METHOD']}();
+        public static function route($doesPrint = TRUE) {
+            $response = static::{'_' . $_SERVER['REQUEST_METHOD']}();
+
+            if($doesPrint) echo json_encode($response);
+
+            return $response;
         }
 
-        protected static function _GET() {
+        public static function _GET($ids = NULL) {
+            if(is_null($ids) && isset($_GET['id'])) {
+                $ids = [$_GET['id']];
+            }
+
             $plural = static::get_plural();
+            $json = new stdClass();
+            
+            $json->{$plural} = static::find($ids);
 
-            echo "{\"$plural\": " . json_encode(static::find()) . '}';
+            return $json;
         }
 
-        protected static function _POST() {
-            echo json_encode(static::insert_route());
+        public static function _POST() {
+            return static::insert_route();
         }
 
-        protected static function _PUT() {
-            echo json_encode(static::update_route());
+        public static function _PUT() {
+            return static::update_route();
         }
 
-        protected static function _DELETE() {
-            echo static::delete($_POST['id']);
+        public static function _DELETE() {
+            return static::delete($_POST['id']);
         }
     }
 ?>

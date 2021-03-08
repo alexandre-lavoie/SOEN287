@@ -10,10 +10,13 @@
             <a class="nav-link <?= strpos($PAGE_TITLE, 'Backstore') === 0  ? 'active' : '' ?>" href="/backstore"><i class="bi bi-house-door"></i> Dashboard</a> 
         </div>
         <div class="nav-item">
-            <a class="nav-link <?= strpos($PAGE_TITLE, 'Product') === 0  ? 'active' : '' ?>" href="/backstore/products"><i class="bi bi-cart"></i> Products</a> 
+            <a class="nav-link <?= strpos($PAGE_TITLE, 'Account') === 0  ? 'active' : '' ?>" href="/backstore/accounts"><i class="bi bi-people"></i> Accounts</a> 
         </div>
         <div class="nav-item">
-            <a class="nav-link <?= strpos($PAGE_TITLE, 'Account') === 0  ? 'active' : '' ?>" href="/backstore/accounts"><i class="bi bi-people"></i> Accounts</a> 
+            <a class="nav-link <?= strpos($PAGE_TITLE, 'Aisle') === 0  ? 'active' : '' ?>" href="/backstore/aisles"><i class="bi bi-shop-window"></i> Aisles</a> 
+        </div>
+        <div class="nav-item">
+            <a class="nav-link <?= strpos($PAGE_TITLE, 'Product') === 0  ? 'active' : '' ?>" href="/backstore/products"><i class="bi bi-cart"></i> Products</a> 
         </div>
         <div class="nav-item">
             <a class="nav-link <?= strpos($PAGE_TITLE, 'Order') === 0  ? 'active' : '' ?>" href="/backstore/orders"><i class="bi bi-receipt"></i> Orders</a> 
