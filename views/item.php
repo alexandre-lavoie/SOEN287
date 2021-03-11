@@ -16,6 +16,22 @@
         <?php include("../components/head.php") ?>
     </head>
     <body class="bg-light">
+        <div id="productDescription" class="modal fade" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title"><?= $item->name ?></h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><?= $item->description ?></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <?php include("../components/header.php") ?>
 
         <nav class="bg-dark pt-3 pb-1">
@@ -48,13 +64,14 @@
                                 include("../components/quantity-selector.php")
                             ?>
                             <br />
-                            <button type="button" class="btn btn-dark mb-2">More Description</button>
+                            <button type="button" class="btn btn-dark mb-2" data-bs-toggle="modal" data-bs-target="#productDescription">More Description</button>
                             <input type="submit" value="<?= is_account() ? "Add" : "Login" ?>" class="btn btn-success"></input>
                         </form>
                     </div>
                 </div>
             </div>
         </section>
+
         <?php include("../components/footer.php") ?>
     </body>
 </html>
