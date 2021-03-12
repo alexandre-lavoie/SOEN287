@@ -8,13 +8,6 @@
       <address>1234 Street, City, Country H6Y A2Z</address>
       <cart>1</cart>
     </account>
-    <account id="2">
-      <email>jane.doe@gmail.com</email>
-      <password>password</password>
-      <name>Jane Doe</name>
-      <address>1234 Street, City, Country H6Y A2Z</address>
-      <cart>1</cart>
-    </account>
   </accounts>
   <carts>
     <cart id="1">
@@ -33,12 +26,40 @@
       <description>1 kg - 5 Breasts per tray</description>
       <image>https://product-images.metro.ca/images/ha1/h5f/9233873764382.jpg</image>
     </item>
+    <item id="2">
+      <name>Vegan Hot Dog Sausages</name>
+      <price>4.69</price>
+      <description>340 G</description>
+      <image>https://product-images.metro.ca/images/h90/h69/9899226136606.jpg</image>
+    </item>
   </items>
   <aisles>
     <aisle id="1">
       <name>Fruits and Vegetables</name>
       <description>An assortment of fresh and healthy foods.</description>
-      <image>/public/images/pexels-ponyo-sakana-4194610.jpg</image>
+      <image>/public/images/aisles/pexels-ponyo-sakana-4194610.jpg</image>
+      <itemstacks>
+        <itemstack id="1">
+          <item>1</item>
+          <quantity>10</quantity>
+        </itemstack>
+      </itemstacks>
+    </aisle>
+    <aisle id="2">
+      <name>Barbecue</name>
+      <description>Everything you can need for the great outdoor.</description>
+      <image>/public/images/aisles/pexels-skitterphoto-1105325.jpg</image>
+      <itemstacks>
+        <itemstack id="1">
+          <item>1</item>
+          <quantity>10</quantity>
+        </itemstack>
+      </itemstacks>
+    </aisle>
+    <aisle id="3">
+      <name>Sweets</name>
+      <description>A selection of the best sweets around.</description>
+      <image>/public/images/aisles/pexels-elli-1854652.jpg</image>
       <itemstacks>
         <itemstack id="1">
           <item>1</item>
@@ -51,12 +72,12 @@
     <splash id="1">
       <name>Welcome to WeEatOnline</name>
       <description>The best online-grocery website!</description>
-      <image>/public/images/pexels-pixabay-264636.jpg</image>
+      <image>/public/images/splashs/pexels-pixabay-264636.jpg</image>
     </splash>
     <splash id="2">
       <name>Tired of In-Person Pickup?</name>
       <description>Try us and you'll never go back!</description>
-      <image>/public/images/pexels-anna-shvets-3962285.jpg</image>
+      <image>/public/images/splashs/pexels-anna-shvets-3962285.jpg</image>
     </splash>
   </splashs>
   <orders>
