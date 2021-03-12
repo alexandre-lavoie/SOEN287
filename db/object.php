@@ -52,7 +52,7 @@
             return $params;
         }
 
-        private static function get_instance_xml($id) {
+        protected static function get_instance_xml($id) {
             $xml = self::get_xml();
             $singular = static::get_singular();
             $plural = static::get_plural();
@@ -133,7 +133,7 @@
         }
 
         public static function update_route() {
-            $instance = static::find([$_POST['id']])[0];
+            $instance = current(static::find([$_POST['id']]));
 
             if(is_null($instance)) return null;
 

@@ -47,6 +47,10 @@
             $xml = simplexml_load_string("<xml><itemstacks></itemstacks></xml>");
 
             foreach($itemstacks as $itemstack) {
+                if(is_array($itemstack)) {
+                    $itemstack = new ItemStack($itemstack['id'], $itemstack['item'], $itemstack['quantity']);
+                }
+
                 simplexml_append($xml->itemstacks, $itemstack->asXML());
             }
 

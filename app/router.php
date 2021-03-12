@@ -47,9 +47,13 @@
                 $file = "index";
             }
 
+            if ($path == "/") {
+                $path = "";
+            }
+
             $route_files = [
-                dirname(__FILE__) . "/../routes" . $path . $file . ".php",
-                dirname(__FILE__) . "/../routes" . $path . $file . "/" . "index.php"
+                dirname(__FILE__) . "/../routes/" . $path . $file . ".php",
+                dirname(__FILE__) . "/../routes/" . $path . $file . "/" . "index.php"
             ]; 
 
             foreach($route_files as $route_file) {

@@ -68,6 +68,39 @@
 <html lang="en">
     <head>
         <?php include("../components/head.php") ?>
+        <script>
+            const cart = <?= json_encode($cart) ?>;
+
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll("input[id*='quantity']").forEach(element => {
+                    element.onchange = updateItemStack;
+                });
+            }, false);
+
+            async function updateItemStack(event) {
+                let itemID = event.target.id.replace("quantity-", '');
+                cart.itemstacks[itemID].quantity = event.target.value;
+
+                updateCart();
+            }
+
+            async function updateCart() {
+                await fetch("/api/cart", { method: "PUT", body: JSON.stringify(cart) });
+
+                refreshReceipt();
+            }
+
+            async function refreshReceipt() {
+                let json = await (await fetch("/api/cart/data")).json();
+
+                console.log(json.items);
+
+                document.querySelector("#items").innerHTML = json.items.map(item => `<i>${item}</i>`).join('</br>');
+                document.querySelector("#qst").innerHTML = Number(json.qst).toFixed(2);
+                document.querySelector("#gst").innerHTML = Number(json.gst).toFixed(2);
+                document.querySelector("#total").innerHTML = Number(json.total).toFixed(2);
+            }
+        </script>
     </head>
     <body class="bg-light">
         <?php include("../components/header.php") ?>
@@ -89,14 +122,16 @@
                     <form method="POST" class="card p-2">
                         <h4 class="mb-0 mt-2">Receipt</h4>
                         <hr />
-                        <?php foreach(array_values($itemstacks) as $itemstack) { ?>
-                            <i><?= $itemstack->quantity ?> x <?= $items[$itemstack->item]->name ?> - $<?= number_format($itemstack->quantity * $items[$itemstack->item]->price, 2) ?></i>
-                        <?php } ?>
+                        <span id="items">
+                            <?php foreach(array_values($itemstacks) as $itemstack) { ?>
+                                <i><?= $itemstack->quantity ?> x <?= $items[$itemstack->item]->name ?> - $<?= number_format($itemstack->quantity * $items[$itemstack->item]->price, 2) ?></i><br/>
+                            <?php } ?>
+                        </span>
                         <hr />
-                        <span>QST: $<?= number_format($qst, 2) ?></span>
-                        <span>GST: $<?= number_format($gst, 2) ?></span>
+                        <span>QST: $<span id="qst"><?= number_format($qst, 2) ?></span></span>
+                        <span>GST: $<span id="gst"><?= number_format($gst, 2) ?></span></span>
                         <hr />
-                        <h5 class="pb-2">Total: $<?= number_format($total, 2) ?></h5>
+                        <h5 class="pb-2">Total: $<span id="total"><?= number_format($total, 2) ?></span></h5>
                         <input type="hidden" name="checkout" value="1"/>
                         <button class="btn w-100 btn-success">Checkout</button>
                     </form>
