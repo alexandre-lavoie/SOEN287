@@ -1,11 +1,18 @@
-<?php
-    include(dirname(__FILE__) . "/../../models/backstore-item.php");
-
-    $backstore_items = BackstoreItem::get_samples();
-    $backstore_item = $backstore_items[$_GET['id'] - 1];
-?>
-
 <?php requires_admin() ?>
+
+<?php
+    include(dirname(__FILE__) . "/../../db/item.php");
+
+    if(isset($_POST['name'])) {
+        if(isset($_GET['id'])) {
+            ItemData::_PUT();
+        } else {
+            ItemData::_POST();
+        }
+    }
+
+    $item = current(ItemData::find([$_GET['id']]));
+?>
 
 <html lang="en">
     <head>
@@ -24,9 +31,15 @@
                         <h2>Product Editor</h2>
 
                         <form class="mb-0" method="POST">
+                            <input 
+                                id="id"
+                                name="id"
+                                type="hidden" 
+                                value="<?= $_GET['id'] ?>" 
+                            />
                             <label for="image" class="pb-2">Image</label>
                             <input 
-                                value="<?= $backstore_item->item->image ?>" 
+                                value="<?= $item->image ?>" 
                                 name="image" 
                                 type="url" 
                                 id="image" 
@@ -36,7 +49,7 @@
                             >
                             <label for="name" class="pb-2 pt-2">Name</label>
                             <input 
-                                value="<?= $backstore_item->item->name ?>" 
+                                value="<?= $item->name ?>" 
                                 name="name" 
                                 type="name" 
                                 id="name" 
@@ -44,13 +57,22 @@
                                 required="" 
                                 autofocus=""
                             >
-                            <label for="quantity" class="pb-2 pt-2">Quantity</label>
+                            <label for="price" class="pb-2 pt-2">Price</label>
                             <input 
-                                value="<?= $backstore_item->quantity ?>" 
-                                name="quantity" 
-                                type="number" 
-                                id="quantity" 
-                                min="0"
+                                value="<?= $item->price ?>" 
+                                name="price" 
+                                type="price" 
+                                id="price" 
+                                class="form-control" 
+                                required="" 
+                                autofocus=""
+                            >
+                            <label for="description" class="pb-2 pt-2">Description</label>
+                            <input 
+                                value="<?= $item->description ?>" 
+                                name="description" 
+                                type="description" 
+                                id="description" 
                                 class="form-control" 
                                 required="" 
                                 autofocus=""

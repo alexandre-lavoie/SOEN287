@@ -2,93 +2,110 @@
     /**
      * @param APP_NAME
      */
-?>
 
-<?php
+    include_once(dirname(__FILE__) . "/json.php");
+
+    function get_base_url() {
+        return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://") . $_SERVER["HTTP_HOST"];
+    }
+
+    function get_error_path($error) {
+        if($error == "404") {
+            return dirname(__FILE__) . '/../errors/404.php';
+        } else if($error == "401") {
+            return dirname(__FILE__) . '/../errors/401.php';
+        } else {
+            return NULL;
+        }
+    }
+
     function redirect($path) {
-        if($path == "404") {
-            include(dirname(__FILE__) . '/../errors/404.php');
+        $error_path = get_error_path($path);
+
+        if(!is_null($error_path)) {
+            include($error_path);
 
             die();
         }
-
-        if($path == "401") {
-            include(dirname(__FILE__) . '/../errors/401.php');
-
-            die();
-        }
-
-
-        echo "<script>window.location.href = '$path'</script>";
+        
+        header('Location: ' . get_base_url() . $path);
 
         die();
     }
-?>
 
-<?php
-    $request_split = explode("/", substr($_SERVER["REQUEST_URI"], 1));
+    function route($uri) {
+        $request_split = explode("/", substr($uri, 1));
 
-    if ($request_split[0] == "api") {
-        $path_split = array_slice($request_split, 1, -1, true);
+        if ($request_split[0] == "api") {
+            $path_split = array_slice($request_split, 1, -1, true);
 
-        $path = join("/", $path_split) . "/";
+            $path = join("/", $path_split) . "/";
 
-        $file = explode('?', end($request_split), 2)[0];
+            $file = explode('?', end($request_split), 2)[0];
 
-        if ($file == "") {
-            $file = "index";
-        }
-
-        $route_file = dirname(__FILE__) . "/../routes" . $path . $file . ".php"; 
-
-        if (file_exists($route_file)) {
-            include ($route_file);
-        } else {
-            $route_file = dirname(__FILE__) . "/../routes" . $path . $file . "/" . "index.php"; 
-
-            if (file_exists($route_file)) {
-                include ($route_file);
-            } else {
-                redirect("404");
+            if ($file == "") {
+                $file = "index";
             }
-        }
-    } else {
-        $path_split = array_slice($request_split, 0, -1, true);
 
-        $path = join("/", $path_split) . "/";
-
-        $uri_no_args = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
-
-        $ext = pathinfo($uri_no_args, PATHINFO_EXTENSION);
-
-        $name = basename($uri_no_args, "." . $ext);
-
-        if ($name == "") {
-            $name = "index";
-        }
-
-        $PAGE_TITLE = ucfirst($name) . " | " . $APP_NAME;
-    
-        if ($ext == "") {
-            $ext = "php";
-        }
-    
-        if ($ext != "php") {
-            redirect("404");
-        }
-    
-        $view_file = dirname(__FILE__) . "/../views/" . $path . $name . "." . $ext;
-
-        if (file_exists($view_file)) {
-            include ($view_file);
-        } else {
-            $view_file = dirname(__FILE__) . "/../views/" . $path . $name . "/" . "index.php"; 
-
-            if (file_exists($view_file)) {
-                include ($view_file);
-            } else {
-                redirect("404");
+            if ($path == "/") {
+                $path = "";
             }
+
+            $route_files = [
+                dirname(__FILE__) . "/../routes/" . $path . $file . ".php",
+                dirname(__FILE__) . "/../routes/" . $path . $file . "/" . "index.php"
+            ]; 
+
+            foreach($route_files as $route_file) {
+                if (!file_exists($route_file)) continue;
+
+                header('Content-Type: application/json');
+
+                return $route_file;
+            }
+
+            return get_error_path("404");
+        } else {
+            $path_split = array_slice($request_split, 0, -1, true);
+
+            $path = join("/", $path_split) . "/";
+
+            $uri_no_args = explode('?', $_SERVER['REQUEST_URI'], 2)[0];
+
+            $ext = pathinfo($uri_no_args, PATHINFO_EXTENSION);
+
+            $name = basename($uri_no_args, "." . $ext);
+
+            if ($name == "") {
+                $name = "index";
+            }
+
+            global $PAGE_TITLE, $APP_NAME;
+
+            $PAGE_TITLE = ucfirst($name) . " | " . $APP_NAME;
+        
+            if ($ext == "") {
+                $ext = "php";
+            }
+        
+            if ($ext != "php") {
+                return get_error_path("404");
+            }
+
+            $view_files = [
+                dirname(__FILE__) . "/../views/" . $path . $name . "." . $ext,
+                dirname(__FILE__) . "/../views/" . $path . $name . "/" . "index.php"
+            ];
+
+            foreach($view_files as $view_file) {
+                if (!file_exists($view_file)) continue;
+
+                return $view_file;
+            }
+
+            return get_error_path("404");
         }
     }
+
+    include route($_SERVER["REQUEST_URI"]);
 ?>

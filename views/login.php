@@ -1,21 +1,11 @@
-<?php
-    /**
-     * 
-     */
-?>
+<?php attempt_login(); ?>
 
 <?php
     $message = 0;
 
     if($_GET["success"] == 1) {
         $message = 1;
-    }
-?>
-
-<?php attempt_login() ?>
-
-<?php
-    if($_SERVER['REQUEST_METHOD'] === 'POST') {
+    } else if($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = 2;
     }
 ?>
@@ -25,9 +15,7 @@
         <?php include("../components/head.php") ?>
     </head>
     <body class="bg-light">
-        <?php include("../components/header.php") ?>
-
-        <div class="d-flex justify-content-center align-items-center container" style="height: 90vh;">
+        <div class="d-flex justify-content-center align-items-center container" style="height: 100%;">
             <div class="row">
                 <div class="col">
                     <?php if($message == 1) { ?>
@@ -43,12 +31,12 @@
                     <?php } ?>
 
                     <form class="card p-4" method="POST">
-                        <center class="pt-2"><h4>We Eat Online</h4></center>
+                        <center class="pt-2"><a class="text-decoration-none text-reset" style="font-size: 1.75em" href="/">WEO</a></center>
 
                         <hr />
 
                         <label for="email" class="pb-2">Email address</label>
-                        <input name="email" type="email" id="email" class="form-control" required="" autofocus="">
+                        <input value="<?php $_POST["email"] ?>" name="email" type="email" id="email" class="form-control" required="" autofocus="">
 
                         <label for="password" class="pt-3 pb-2">Password</label>
                         <input name="password" type="password" id="password" class="form-control" required="">

@@ -13,7 +13,12 @@
     <div class="carousel-inner">
         <?php for($i = 0; $i < sizeof($splash_images); $i++) { ?>
             <div class="carousel-item <?= $i == 0 ? 'active' : ''?>">
-                <img class="d-block w-100" style="height: 550px; object-fit: cover;" src="<?= $splash_images[$i]->image ?>" alt="<?= $splash_images[$i]->name ?>">
+                <img 
+                    class="d-block w-100" 
+                    style="height: 550px; object-fit: cover;" 
+                    src="<?= $splash_images[$i]->image ?>" 
+                    alt="<?= $splash_images[$i]->name ?>"
+                >
                 <div class="carousel-caption d-none d-md-block">
                     <h5><?= $splash_images[$i]->name ?></h5>
                     <p><?= $splash_images[$i]->description ?></p>

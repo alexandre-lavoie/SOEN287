@@ -1,10 +1,18 @@
 <?php
-    include(dirname(__FILE__) . "/../../models/backstore-item.php");
+    requires_admin();
 
-    $backstore_items = BackstoreItem::get_samples();
+    include(dirname(__FILE__) . "/../../db/item.php");
+
+    $products = ItemData::find();
+
+    if(isset($_POST['delete'])) {
+        $id = $_POST['delete'];
+
+        if(ItemData::delete($id)) {
+            unset($products[$id]);
+        }
+    }
 ?>
-
-<?php requires_admin() ?>
 
 <html lang="en">
     <head>
@@ -33,24 +41,23 @@
                                         <th scope="col">ID</th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Quantity</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($backstore_items as $backstore_item) { ?>
+                                    <?php foreach($products as $product) { ?>
                                         <tr>
-                                            <td><?= $backstore_item->id ?></td>
-                                            <td><img style="max-width: 75px" src="<?= $backstore_item->item->image ?>"/></td>
-                                            <td><?= $backstore_item->item->name ?></td>
-                                            <td><?= $backstore_item->quantity ?></td>
+                                            <td><?= $product->id ?></td>
+                                            <td><img style="max-width: 75px" src="<?= $product->image ?>"/></td>
+                                            <td><?= $product->name ?></td>
                                             <td>
-                                                <a class="m-2 no-dec" href="/backstore/product?id=<?= $backstore_item->id ?>">
+                                                <a class="m-2 no-dec" href="/backstore/product?id=<?= $product->id ?>">
                                                     <button class="btn btn-success">Edit</button>
                                                 </a>
-                                                <a class="no-dec" href="/backstore/product?id=<?= $backstore_item->id ?>">
+                                                <form method="POST" style="display: inline">
+                                                    <input id="delete" name="delete" type="hidden" value="<?= $product->id ?>"/>
                                                     <button class="btn btn-danger">Delete</button>
-                                                </a>
+                                                </form>
                                             </td>
                                         </tr>
                                     <?php } ?>

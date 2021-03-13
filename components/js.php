@@ -1,9 +1,25 @@
 <script>
-    function increment(id) {
-        document.querySelector(`#${id}`).innerText = parseInt(document.querySelector(`#${id}`).innerText) + 1;
+    function increment(event) {
+        const id = event.target.id.replace('i-', '');
+        const target = document.querySelector(`#${id}`);
+
+        target.value = parseInt(target.value) + 1;
+
+        target.dispatchEvent(new Event('change'));
     }
 
-    function decrement(id) {
-        document.querySelector(`#${id}`).innerText = Math.max(parseInt(document.querySelector(`#${id}`).innerText) - 1, 1);
+    function decrement(event) {
+        const id = event.target.id.replace('d-', '');
+        const target = document.querySelector(`#${id}`);
+
+        target.value = Math.max(parseInt(target.value) - 1, 1);
+
+        target.dispatchEvent(new Event('change'));
     }
+
+    function unhide_js() {
+        document.querySelectorAll(".nojs").forEach(noJS => noJS.classList.remove('nojs'));
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => unhide_js());
 </script>

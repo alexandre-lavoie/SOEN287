@@ -1,9 +1,3 @@
-<?php
-    include(dirname(__FILE__) . "/../../models/backstore-item.php");
-
-    $backstore_items = BackstoreItem::get_samples();
-?>
-
 <?php requires_admin() ?>
 
 <html lang="en">

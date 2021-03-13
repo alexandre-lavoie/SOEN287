@@ -32,4 +32,8 @@
     .nav-link.active {
         color: #198754;
     }
+
+    .nojs {
+        display: none;
+    }
 </style>

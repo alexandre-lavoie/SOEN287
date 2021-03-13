@@ -1,9 +1,14 @@
 <?php
-    include("../models/aisle.php");
+    include("../db/aisle.php");
 
-    $aisle = Aisle::get_samples()[$_GET["id"] - 1];
+    $json = AisleData::_GET([$_GET["id"]]);
 
-    $items = $aisle->items;
+    $aisle = current($json->aisles);
+    $items = array_values($json->items);
+    $nav = [
+        ['url' => '/', 'name' => 'Home'], 
+        ['url' => "/aisle?id=$aisle->id", 'name' => $aisle->name]
+    ];
 ?>
 
 <html lang="en">
@@ -12,14 +17,10 @@
     </head>
     <body class="bg-light">
         <?php include("../components/header.php") ?>
+        
         <img class="w-100" style="height: 550px; object-fit: cover;" src="<?= $aisle->image ?>" />
 
-        <nav class="bg-dark pt-3 pb-1">
-            <ol class="d-flex justify-content-center breadcrumb">
-                <li class="text-white breadcrumb-item"><a href="/">Home</a></li>
-                <li class="text-white breadcrumb-item active"><?= $aisle->name ?></li>
-            </ol>
-        </nav>
+        <?php include("../components/breadcrumb-nav.php") ?>
 
         <section class="pt-4">
             <div class="container">
