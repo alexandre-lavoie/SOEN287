@@ -1,4 +1,6 @@
 <?php
+    requires_admin();
+
     include(dirname(__FILE__) . "/../../db/order.php");
 
     $json = OrderData::_GET();
@@ -13,8 +15,6 @@
         }
     }
 ?>
-
-<?php requires_admin() ?>
 
 <html lang="en">
     <head>
@@ -57,7 +57,7 @@
                                                     <button type="button" class="btn btn-success">Edit</button>
                                                 </a>
 
-                                                <form method="POST">
+                                                <form method="POST" style="display: inline">
                                                     <input id="delete" name="delete" type="hidden" value="<?= $order->id ?>"/>
                                                     <button class="btn btn-danger">Delete</button>
                                                 </form>

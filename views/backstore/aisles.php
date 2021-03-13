@@ -1,10 +1,20 @@
 <?php
+    requires_admin();
+
     include(dirname(__FILE__) . "/../../db/aisle.php");
+
+    $aisles = AisleData::find();
+
+    if(isset($_POST['delete'])) {
+        $id = $_POST['delete'];
+
+        if(AisleData::delete($id)) {
+            unset($aisles[$id]);
+        }
+    }
 
     $aisles = array_values(AisleData::find());
 ?>
-
-<?php requires_admin() ?>
 
 <html lang="en">
     <head>
@@ -48,9 +58,10 @@
                                                 <a class="m-2 no-dec" href="/backstore/aisle?id=<?= $aisle->id ?>">
                                                     <button class="btn btn-success">Edit</button>
                                                 </a>
-                                                <a class="no-dec" href="/backstore/aisle?id=<?= $aisle->id ?>">
+                                                <form method="POST" style="display: inline">
+                                                    <input id="delete" name="delete" type="hidden" value="<?= $aisle->id ?>"/>
                                                     <button class="btn btn-danger">Delete</button>
-                                                </a>
+                                                </form>
                                             </td>
                                         </tr>
                                     <?php } ?>

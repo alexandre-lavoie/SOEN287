@@ -1,10 +1,20 @@
 <?php
+    requires_admin();
+
     include(dirname(__FILE__) . "/../../db/account.php");
 
-    $accounts = array_values(AccountData::find());
-?>
+    $accounts = AccountData::find();
 
-<?php requires_admin() ?>
+    if(isset($_POST['delete'])) {
+        $id = $_POST['delete'];
+
+        if(AccountData::delete($id)) {
+            unset($accounts[$id]);
+        }
+    }
+
+    $accounts = array_values($accounts);
+?>
 
 <html lang="en">
     <head>
@@ -50,9 +60,10 @@
                                                 <a class="m-2 no-dec" href="/backstore/account?id=<?= $account->id ?>">
                                                     <button class="btn btn-success">Edit</button>
                                                 </a>
-                                                <a class="no-dec" href="/backstore/account?id=<?= $account->id ?>">
+                                                <form method="POST" style="display: inline">
+                                                    <input id="delete" name="delete" type="hidden" value="<?= $account->id ?>"/>
                                                     <button class="btn btn-danger">Delete</button>
-                                                </a>
+                                                </form>
                                             </td>
                                         </tr>
                                     <?php } ?>

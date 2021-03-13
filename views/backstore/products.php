@@ -1,10 +1,18 @@
 <?php
+    requires_admin();
+
     include(dirname(__FILE__) . "/../../db/item.php");
 
     $products = ItemData::find();
-?>
 
-<?php requires_admin() ?>
+    if(isset($_POST['delete'])) {
+        $id = $_POST['delete'];
+
+        if(ItemData::delete($id)) {
+            unset($products[$id]);
+        }
+    }
+?>
 
 <html lang="en">
     <head>
@@ -46,9 +54,10 @@
                                                 <a class="m-2 no-dec" href="/backstore/product?id=<?= $product->id ?>">
                                                     <button class="btn btn-success">Edit</button>
                                                 </a>
-                                                <a class="no-dec" href="/backstore/product?id=<?= $product->id ?>">
+                                                <form method="POST" style="display: inline">
+                                                    <input id="delete" name="delete" type="hidden" value="<?= $product->id ?>"/>
                                                     <button class="btn btn-danger">Delete</button>
-                                                </a>
+                                                </form>
                                             </td>
                                         </tr>
                                     <?php } ?>

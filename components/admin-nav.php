@@ -21,5 +21,8 @@
         <div class="nav-item">
             <a class="nav-link <?= strpos($PAGE_TITLE, 'Order') === 0  ? 'active' : '' ?>" href="/backstore/orders"><i class="bi bi-receipt"></i> Orders</a> 
         </div>
+        <div class="nav-item">
+            <a class="nav-link <?= strpos($PAGE_TITLE, 'Upload') === 0  ? 'active' : '' ?>" href="/backstore/upload"><i class="bi bi-upload"></i> Upload</a> 
+        </div>
     </div>
 </div>
