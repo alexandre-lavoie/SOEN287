@@ -3,6 +3,14 @@
 <?php
     include(dirname(__FILE__) . "/../../db/account.php");
 
+    if(isset($_POST['name'])) {
+        if(isset($_GET['id'])) {
+            AccountData::_PUT();
+        } else {
+            AccountData::_POST();
+        }
+    }
+
     $account = current(AccountData::find([$_GET['id']]));
 ?>
 

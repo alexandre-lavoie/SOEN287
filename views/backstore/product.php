@@ -3,6 +3,14 @@
 <?php
     include(dirname(__FILE__) . "/../../db/item.php");
 
+    if(isset($_POST['name'])) {
+        if(isset($_GET['id'])) {
+            ItemData::_PUT();
+        } else {
+            ItemData::_POST();
+        }
+    }
+
     $item = current(ItemData::find([$_GET['id']]));
 ?>
 
@@ -45,6 +53,26 @@
                                 name="name" 
                                 type="name" 
                                 id="name" 
+                                class="form-control" 
+                                required="" 
+                                autofocus=""
+                            >
+                            <label for="price" class="pb-2 pt-2">Price</label>
+                            <input 
+                                value="<?= $item->price ?>" 
+                                name="price" 
+                                type="price" 
+                                id="price" 
+                                class="form-control" 
+                                required="" 
+                                autofocus=""
+                            >
+                            <label for="description" class="pb-2 pt-2">Description</label>
+                            <input 
+                                value="<?= $item->description ?>" 
+                                name="description" 
+                                type="description" 
+                                id="description" 
                                 class="form-control" 
                                 required="" 
                                 autofocus=""

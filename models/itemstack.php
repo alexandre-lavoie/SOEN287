@@ -12,6 +12,10 @@
             $this->quantity = $quantity;
         }
 
+        public static function fromArray($array) {
+            return new ItemStack($array['id'], $array['item'], $array['quantity']);
+        }
+
         public static function fromXML($xml) {
             return new ItemStack(
                 (string)$xml['id'],
@@ -48,13 +52,29 @@
 
             foreach($itemstacks as $itemstack) {
                 if(is_array($itemstack)) {
-                    $itemstack = new ItemStack($itemstack['id'], $itemstack['item'], $itemstack['quantity']);
+                    $itemstack = ItemStack::fromArray($itemstack);
                 }
 
                 simplexml_append($xml->itemstacks, $itemstack->asXML());
             }
 
             return $xml;
+        }
+
+        public static function largestID($list) {
+            $id = 0;
+
+            foreach($list as $itemstack) {
+                if(is_array($itemstack)) {
+                    $itemstack = ItemStack::fromArray($itemstack);
+                }
+
+                if($itemstack->id > $id) {
+                    $id = $itemstack->id;
+                }
+            }
+
+            return $id;
         }
     }
 ?>

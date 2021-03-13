@@ -1,7 +1,50 @@
 <?php requires_admin() ?>
 
 <?php
+    include(dirname(__FILE__) . "/../../models/itemstack.php");
     include(dirname(__FILE__) . "/../../db/aisle.php");
+
+    $itemstacks = [];
+
+    foreach(array_keys($_POST) as $var) {
+        if(strpos($var, 'itemstack') === 0) {
+            if(empty($_POST[$var])) continue;
+
+            $segments = explode('-', $var);
+
+            $id = $segments[1];
+
+            if(!isset($itemstacks[$id])) {
+                $itemstacks[$id] = new ItemStack($id, -1, -1);
+            }
+
+            switch($segments[2]) {
+                case 'item':
+                    $itemstacks[$id]->item = $_POST[$var];
+                    break;
+                case 'quantity':
+                    $itemstacks[$id]->quantity = $_POST[$var];
+                    break;
+            }
+        }
+    }
+
+    if(sizeof($itemstacks) > 0) {
+        $aisle = current(AisleData::find([$_GET['id']]));
+
+        $aisle->itemstacks = $itemstacks;
+
+        AisleData::update($aisle);
+    }
+
+
+    if(isset($_POST['name'])) {
+        if(isset($_GET['id'])) {
+            AisleData::_PUT();
+        } else {
+            AisleData::_POST();
+        }
+    }
 
     $json = AisleData::_GET([$_GET['id']]);
     $aisle = current($json->aisles);
@@ -36,7 +79,7 @@
                             <input 
                                 value="<?= $aisle->image ?>" 
                                 name="image" 
-                                type="url" 
+                                type="link" 
                                 id="image" 
                                 class="form-control" 
                                 required="" 
@@ -63,54 +106,7 @@
                                 autofocus=""
                             >
                             <label for="items" class="pb-2 pt-2">Items</label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered m-0">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">ID</th>
-                                            <th scope="col">Quantity</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if($order) { ?>
-                                            <?php foreach($cart->itemstacks as $itemstack) { ?>
-                                                <tr>
-                                                    <td>
-                                                        <input
-                                                            class="form-control"
-                                                            required="" 
-                                                            autofocus=""
-                                                            value="<?= $itemstack->id?>"
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <input
-                                                            class="form-control"
-                                                            required="" 
-                                                            autofocus=""
-                                                            value="<?= $itemstack->quantity?>"
-                                                        />
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
-                                        <?php }?>
-                                        <tr>
-                                            <td>
-                                                <input
-                                                    class="form-control"
-                                                    value=""
-                                                />    
-                                            </td>
-                                            <td>
-                                                <input
-                                                    class="form-control"
-                                                    value=""
-                                                />
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <?php include(dirname(__FILE__) . '/../../components/items.php') ?>
                             <button class="btn btn-success mt-4 mb-0 w-100">Submit</button>
                         </form>
                     </div>
