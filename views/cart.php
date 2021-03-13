@@ -73,13 +73,18 @@
 
             document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll("input[id*='quantity']").forEach(element => {
-                    element.onchange = updateItemStack;
+                    element.onchange = onChangeItemStack;
                 });
             }, false);
 
-            async function updateItemStack(event) {
+            async function onChangeItemStack(event) {
                 let itemID = event.target.id.replace("quantity-", '');
-                cart.itemstacks[itemID].quantity = event.target.value;
+
+                updateItemStack(itemID, event.target.value);
+            }
+
+            async function updateItemStack(id, value) {
+                cart.itemstacks[id].quantity = value;
 
                 updateCart();
             }
@@ -92,8 +97,6 @@
 
             async function refreshReceipt() {
                 let json = await (await fetch("/api/cart/data")).json();
-
-                console.log(json.items);
 
                 document.querySelector("#items").innerHTML = json.items.map(item => `<i>${item}</i>`).join('</br>');
                 document.querySelector("#qst").innerHTML = Number(json.qst).toFixed(2);
