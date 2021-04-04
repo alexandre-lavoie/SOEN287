@@ -1,6 +1,7 @@
 <?php
     requires_admin();
 
+    include(dirname(__FILE__) . "/../../models/item.php");
     include(dirname(__FILE__) . "/../../db/item.php");
 
     $products = ItemData::find();
@@ -12,6 +13,8 @@
             unset($products[$id]);
         }
     }
+
+    $URL = "/backstore/product";
 ?>
 
 <html lang="en">
@@ -27,12 +30,7 @@
                     <?php include(dirname(__FILE__) . "/../../components/admin-nav.php") ?>
                 </div>
                 <div class="col-12 col-md-8 col-lg-10 pb-2">
-                    <div class="card p-2 mb-2">
-                        <input class="form-control" placeholder="Search" />
-                        <a class="mt-2 no-dec" href="/backstore/product">
-                            <button class="btn btn-success" style="width: 100%">Create</button>
-                        </a>
-                    </div>
+                    <?php include(dirname(__FILE__) . "/../../components/admin-create-section.php") ?>
                     <div class="card p-2">
                         <div class="table-responsive">
                             <table class="table table-bordered mb-0">
@@ -51,13 +49,11 @@
                                             <td><img style="max-width: 75px" src="<?= $product->image ?>"/></td>
                                             <td><?= $product->name ?></td>
                                             <td>
-                                                <a class="m-2 no-dec" href="/backstore/product?id=<?= $product->id ?>">
-                                                    <button class="btn btn-success">Edit</button>
-                                                </a>
-                                                <form method="POST" style="display: inline">
-                                                    <input id="delete" name="delete" type="hidden" value="<?= $product->id ?>"/>
-                                                    <button class="btn btn-danger">Delete</button>
-                                                </form>
+                                                <?php
+                                                    $ID = $product->id;
+
+                                                    include(dirname(__FILE__) . "/../../components/admin-table-buttons.php");
+                                                ?>
                                             </td>
                                         </tr>
                                     <?php } ?>

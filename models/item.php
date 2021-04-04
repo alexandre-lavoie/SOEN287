@@ -6,7 +6,7 @@
         public $image;
         public $price;
 
-        function __construct($id, $name, $price, $description, $image) {
+        function __construct($id, $name, $description, $image, $price) {
             $this->id = $id;
             $this->name = $name;
             $this->price = $price;
@@ -18,9 +18,9 @@
             return new Item(
                 (string)$xml['id'],
                 (string)$xml->name,
-                (string)$xml->price,
                 (string)$xml->description,
-                (string)$xml->image
+                (string)$xml->image,
+                (string)$xml->price
             );
         }
 

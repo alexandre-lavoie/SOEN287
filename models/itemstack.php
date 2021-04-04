@@ -50,12 +50,14 @@
         public static function asXMLList($itemstacks) {
             $xml = simplexml_load_string("<xml><itemstacks></itemstacks></xml>");
 
-            foreach($itemstacks as $itemstack) {
-                if(is_array($itemstack)) {
-                    $itemstack = ItemStack::fromArray($itemstack);
+            if(is_array($itemstacks)) {
+                foreach($itemstacks as $itemstack) {
+                    if(is_array($itemstack)) {
+                        $itemstack = ItemStack::fromArray($itemstack);
+                    }
+    
+                    simplexml_append($xml->itemstacks, $itemstack->asXML());
                 }
-
-                simplexml_append($xml->itemstacks, $itemstack->asXML());
             }
 
             return $xml;
@@ -64,13 +66,15 @@
         public static function largestID($list) {
             $id = 0;
 
-            foreach($list as $itemstack) {
-                if(is_array($itemstack)) {
-                    $itemstack = ItemStack::fromArray($itemstack);
-                }
-
-                if($itemstack->id > $id) {
-                    $id = $itemstack->id;
+            if(is_array($list)) {
+                foreach($list as $itemstack) {
+                    if(is_array($itemstack)) {
+                        $itemstack = ItemStack::fromArray($itemstack);
+                    }
+    
+                    if($itemstack->id > $id) {
+                        $id = $itemstack->id;
+                    }
                 }
             }
 

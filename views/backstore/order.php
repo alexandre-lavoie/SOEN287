@@ -1,6 +1,6 @@
-<?php requires_admin() ?>
+<?php 
+    requires_admin();
 
-<?php
     include(dirname(__FILE__) . "/../../models/itemstack.php");
     include(dirname(__FILE__) . "/../../db/cart.php");
     include(dirname(__FILE__) . "/../../db/order.php");
@@ -34,6 +34,16 @@
         }
     }
 
+    if(isset($_POST['account'])) {
+        if(isset($_GET['id'])) {
+            OrderData::_PUT();
+        } else {
+            $order = OrderData::_POST();
+
+            $_GET['id'] = $order->id;
+        }
+    }
+
     if(sizeof($itemstacks) > 0) {
         $json = OrderData::_GET([$_GET['id']]);
         $order = current($json->orders);
@@ -44,19 +54,17 @@
         CartData::update($cart);
     }
 
-    if(isset($_POST['account'])) {
-        if(isset($_GET['id'])) {
-            OrderData::_PUT();
-        } else {
-            OrderData::_POST();
-        }
-    }
-
     $json = OrderData::_GET([$_GET['id']]);
     $order = current($json->orders);
     $cart = $json->carts[$order->cart];
     $itemstacks = $cart->itemstacks;
     $items = $json->items;
+
+    $OBJECT = $order;
+    $OBJECT->date = explode(" ", $order->time)[0];
+    $OBJECT->time = explode(" ", $order->time)[1];
+    $NAME = "Product";
+    $FIELDS = ['date', 'time', 'account', 'itemstacks'];
 ?>
 
 <html lang="en">
@@ -72,51 +80,7 @@
                     <?php include(dirname(__FILE__) . "/../../components/admin-nav.php") ?>
                 </div>
                 <div class="col-12 col-md-8 col-lg-10 pb-2">
-                    <div class="card p-2">
-                        <h2>Order Editor</h2>
-
-                        <form class="mb-0" method="POST">
-                            <input 
-                                id="id"
-                                name="id"
-                                type="hidden" 
-                                value="<?= $_GET['id'] ?>" 
-                            />
-                            <label for="date" class="pb-2">Date</label>
-                            <input 
-                                value="<?= explode(" ", $order->time)[0] ?>" 
-                                name="date" 
-                                type="date" 
-                                id="date" 
-                                class="form-control" 
-                                required="" 
-                                autofocus=""
-                            >
-                            <label for="time" class="pb-2 pt-2">Time</label>
-                            <input 
-                                value="<?= explode(" ", $order->time)[1] ?>" 
-                                name="time" 
-                                type="time" 
-                                id="time" 
-                                class="form-control" 
-                                required="" 
-                                autofocus=""
-                            >
-                            <label for="account" class="pb-2 pt-2">Account ID</label>
-                            <input 
-                                value="<?= $order->account ?>" 
-                                name="account" 
-                                type="id" 
-                                id="account" 
-                                class="form-control" 
-                                required="" 
-                                autofocus=""
-                            >
-                            <label for="items" class="pb-2 pt-2">Items</label>
-                            <?php include(dirname(__FILE__) . '/../../components/items.php') ?>
-                            <button class="btn btn-success mt-4 mb-0 w-100">Submit</button>
-                        </form>
-                    </div>
+                    <?php include("../components/admin-editor.php") ?>
                 </div>
             </div>
         </div>

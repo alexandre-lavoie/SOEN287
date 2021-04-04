@@ -1,6 +1,6 @@
-<?php requires_admin() ?>
-
 <?php
+    requires_admin();
+    
     include(dirname(__FILE__) . "/../../db/upload.php");
 
     if(isset($_FILES['xml'])) {

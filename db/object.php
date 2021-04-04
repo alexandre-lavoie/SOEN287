@@ -138,7 +138,7 @@
             if(is_null($instance)) return null;
 
             foreach(static::get_class_params() as $param) {
-                if(!isset($_POST[$param]) || empty($_POST[$param])) continue;
+                if(!isset($_POST[$param])) continue;
 
                 $instance->{$param} = $_POST[$param]; 
             }

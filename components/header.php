@@ -19,7 +19,7 @@
                     <i class="bi bi-cart2"></i>
                     <span class="px-1"></span>
                     <?php if($CART_COUNT > 0) { ?>
-                        <span class="badge badge-pill badge-light bg-danger"><?= $CART_COUNT ?></span>
+                        <span id="cart-count" class="badge badge-pill badge-light bg-danger"><?= $CART_COUNT ?></span>
                     <?php } ?>
                 </button>
             </a>

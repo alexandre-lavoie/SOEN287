@@ -1,6 +1,6 @@
-<?php requires_admin() ?>
-
 <?php
+    requires_admin();
+
     include(dirname(__FILE__) . "/../../models/itemstack.php");
     include(dirname(__FILE__) . "/../../db/aisle.php");
 
@@ -29,6 +29,16 @@
         }
     }
 
+    if(isset($_POST['name'])) {
+        if(isset($_GET['id'])) {
+            AisleData::_PUT();
+        } else {
+            $aisle = AisleData::_POST();
+
+            $_GET['id'] = $aisle->id;
+        }
+    }
+
     if(sizeof($itemstacks) > 0) {
         $aisle = current(AisleData::find([$_GET['id']]));
 
@@ -37,19 +47,14 @@
         AisleData::update($aisle);
     }
 
-
-    if(isset($_POST['name'])) {
-        if(isset($_GET['id'])) {
-            AisleData::_PUT();
-        } else {
-            AisleData::_POST();
-        }
-    }
-
     $json = AisleData::_GET([$_GET['id']]);
     $aisle = current($json->aisles);
     $itemstacks = $aisle->itemstacks;
     $items = $json->items;
+
+    $OBJECT = $aisle;
+    $NAME = "Aisle";
+    $FIELDS = ['name', 'description', 'image', 'itemstacks'];
 ?>
 
 <html lang="en">
@@ -65,51 +70,7 @@
                     <?php include(dirname(__FILE__) . "/../../components/admin-nav.php") ?>
                 </div>
                 <div class="col-12 col-md-8 col-lg-10 pb-2">
-                    <div class="card p-2">
-                        <h2>Aisle Editor</h2>
-
-                        <form class="mb-0" method="POST">
-                            <input 
-                                id="id"
-                                name="id"
-                                type="hidden" 
-                                value="<?= $_GET['id'] ?>" 
-                            />
-                            <label for="image" class="pb-2">Image</label>
-                            <input 
-                                value="<?= $aisle->image ?>" 
-                                name="image" 
-                                type="link" 
-                                id="image" 
-                                class="form-control" 
-                                required="" 
-                                autofocus=""
-                            >
-                            <label for="name" class="pb-2 pt-2">Name</label>
-                            <input 
-                                value="<?= $aisle->name ?>" 
-                                name="name" 
-                                type="name" 
-                                id="name" 
-                                class="form-control" 
-                                required="" 
-                                autofocus=""
-                            >
-                            <label for="description" class="pb-2 pt-2">Description</label>
-                            <input 
-                                value="<?= $aisle->description ?>" 
-                                name="description" 
-                                type="description" 
-                                id="description" 
-                                class="form-control" 
-                                required="" 
-                                autofocus=""
-                            >
-                            <label for="items" class="pb-2 pt-2">Items</label>
-                            <?php include(dirname(__FILE__) . '/../../components/items.php') ?>
-                            <button class="btn btn-success mt-4 mb-0 w-100">Submit</button>
-                        </form>
-                    </div>
+                    <?php include("../components/admin-editor.php") ?>
                 </div>
             </div>
         </div>

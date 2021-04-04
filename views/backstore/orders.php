@@ -14,6 +14,8 @@
             unset($orders[$id]);
         }
     }
+
+    $URL = "/backstore/order";
 ?>
 
 <html lang="en">
@@ -29,12 +31,7 @@
                     <?php include(dirname(__FILE__) . "/../../components/admin-nav.php") ?>
                 </div>
                 <div class="col-12 col-md-8 col-lg-10 pb-2">
-                    <div class="card p-2 mb-2">
-                        <input class="form-control" placeholder="Search" />
-                        <a class="mt-2 no-dec" href="/backstore/order">
-                            <button class="btn btn-success" style="width: 100%">Create</button>
-                        </a>
-                    </div>
+                    <?php include(dirname(__FILE__) . "/../../components/admin-create-section.php") ?>
                     <div class="card p-2">
                         <div class="table-responsive">
                             <table class="table table-bordered mb-0">
@@ -53,14 +50,11 @@
                                             <td><?= $order->time?></td>
                                             <td><?= $accounts[$order->account]->address?></td>
                                             <td>
-                                                <a class="m-2 no-dec" href="/backstore/order?id=<?= $order->id ?>">
-                                                    <button type="button" class="btn btn-success">Edit</button>
-                                                </a>
+                                                <?php
+                                                    $ID = $order->id;
 
-                                                <form method="POST" style="display: inline">
-                                                    <input id="delete" name="delete" type="hidden" value="<?= $order->id ?>"/>
-                                                    <button class="btn btn-danger">Delete</button>
-                                                </form>
+                                                    include(dirname(__FILE__) . "/../../components/admin-table-buttons.php");
+                                                ?>
                                             </td>
                                         </tr>
                                     <?php } ?>

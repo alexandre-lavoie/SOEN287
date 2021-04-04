@@ -1,1 +1,1 @@
-# SOEN287
+# WeEatOnline

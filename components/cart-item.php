@@ -7,7 +7,8 @@
     $item = $items[$itemstack->item];
 ?>
 
-<div class="card px-2 mb-2">
+<div id="item-card-<?= $itemstack->id ?>" class="card px-2 mb-2">
+    <h3 style="position: absolute; cursor: pointer; right: 0" onclick="deleteItemStack('<?= $itemstack->id ?>')"><i class="bi bi-x"></i></h3>
     <div class="row">
         <div class="d-flex col py-2 justify-content-center">
             <img class="w-100" style="max-height: 200px; object-fit: cover;" src="<?= $item->image ?>"></img>

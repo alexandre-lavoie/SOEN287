@@ -36,10 +36,10 @@
                         <hr />
 
                         <label for="email" class="pb-2">Email address</label>
-                        <input value="<?php $_POST["email"] ?>" name="email" type="email" id="email" class="form-control" required="" autofocus="">
+                        <input value="<?php $_POST['email'] ?>" name="email" type="email" id="email" class="form-control" required="true" autofocus="">
 
                         <label for="password" class="pt-3 pb-2">Password</label>
-                        <input name="password" type="password" id="password" class="form-control" required="">
+                        <input name="password" type="password" id="password" class="form-control" required="true">
                         <a class="pt-2" style="text-align: end; font-size: 14px" href="/forgot-password">Forgot Password?</a>
 
                         <hr />
@@ -53,6 +53,5 @@
                 </div>
             </div>
         </div>
-
     </body>
 </html>

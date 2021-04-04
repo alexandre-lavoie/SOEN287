@@ -16,31 +16,17 @@
         <?php include("../components/head.php") ?>
     </head>
     <body class="bg-light">
-        <div id="productDescription" class="modal fade" role="dialog" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title"><?= $item->name ?></h5>
-                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p><?= $item->description ?></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php
+            $ID = "productDescription";
+            $TITLE = $item->name;
+            $TEXT = $item->description;
+
+            include("../components/message-modal.php");
+        ?>
 
         <?php include("../components/header.php") ?>
 
-        <nav class="bg-dark pt-3 pb-1">
-            <ol class="d-flex justify-content-center breadcrumb">
-                <li class="text-white breadcrumb-item"><a href="/">Home</a></li>
-                <li class="text-white breadcrumb-item"><a href="/aisle?id=<?= $aisle->id ?>"><?= $aisle->name ?></a></li>
-                <li class="text-white breadcrumb-item active"><?= $item->name ?></li>
-            </ol>
-        </nav>
+        <?php include("../components/breadcrumb-nav.php") ?>
 
         <section class="p-2" style="min-height: 78vh">
             <div class="container">

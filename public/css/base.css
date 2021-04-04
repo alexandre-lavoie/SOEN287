@@ -1,0 +1,37 @@
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+a {
+    color: #198754;
+}
+
+a:hover {
+    color: #157347;
+}
+
+.no-dec {
+    text-decoration: none;
+}
+
+.table th {
+    text-align: center;   
+}
+
+.table td {
+    vertical-align: middle;
+    text-align: center;   
+}
+
+.nav-link {
+    color: black;
+}
+
+.nav-link.active {
+    color: #198754;
+}
+
+.nojs {
+    display: none;
+}
