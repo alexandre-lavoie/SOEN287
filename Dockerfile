@@ -16,8 +16,8 @@ RUN { \
         echo 'opcache.enable_cli=1'; \
     } > /usr/local/etc/php/conf.d/php-opocache-cfg.ini
 
-COPY ./nginx.conf /etc/nginx.conf.template
-COPY ./entrypoint.sh /etc/entrypoint.sh
+COPY ./docker/nginx.conf /etc/nginx.conf.template
+COPY ./docker/entrypoint.sh /etc/entrypoint.sh
 
 COPY . /www
 
