@@ -31,7 +31,7 @@
                     <?php } ?>
 
                     <form class="card p-4" method="POST">
-                        <center class="pt-2"><a class="text-decoration-none text-reset" style="font-size: 1.75em" href="/">WEO</a></center>
+                        <center class="pt-2"><a class="text-decoration-none text-reset" style="font-size: 1.75em" href="/"><?= $APP_NAME ?></a></center>
 
                         <hr />
 

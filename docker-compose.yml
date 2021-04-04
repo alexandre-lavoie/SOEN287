@@ -22,6 +22,7 @@ services:
       - ./db:/www/db
       - ./utils:/www/utils
       - ./errors:/www/errors
+      - ./setup:/www/setup
   
 networks:
   soen287-network:

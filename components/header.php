@@ -1,4 +1,7 @@
 <?php
+    /**
+     * @param APP_NAME
+     */
     include_once(dirname(__FILE__) . "/../db/account.php");
 
     $json = AccountData::_GET([$_SESSION["accountID"]]);
@@ -11,7 +14,7 @@
 ?>
 
 <nav class="navbar px-3 navbar-expand-lg justify-content-between navbar-dark bg-success">
-    <a class="navbar-brand" href="/">WEO</a>
+    <a class="navbar-brand" href="/"><?= $APP_NAME ?></a>
     <div class="d-flex">
         <?php if(is_account()) { ?>
             <a href="/cart">

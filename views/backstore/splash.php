@@ -1,19 +1,17 @@
-<?php
-    include_once(dirname(__FILE__) . "/../../db/item.php");
+<?php 
+    include_once(dirname(__FILE__) . "/../../db/splash.php");
 
-    if(isset($_POST['price']) && isset($_POST['name'])) {
+    if(isset($_POST['name'])) {
         if(isset($_GET['id'])) {
-            ItemData::_PUT();
+            SplashData::_PUT();
         } else {
-            ItemData::_POST();
+            SplashData::_POST();
         }
     }
 
-    $item = current(ItemData::find([$_GET['id']]));
-
-    $OBJECT = $item;
-    $NAME = "Product";
-    $FIELDS = ['name', 'description', 'image', 'price'];
+    $OBJECT = current(SplashData::find([$_GET['id']]));
+    $NAME = 'Splash';
+    $FIELDS = ['name', 'description', 'image'];
 ?>
 
 <html lang="en">

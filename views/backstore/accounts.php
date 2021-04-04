@@ -1,5 +1,5 @@
 <?php
-    include(dirname(__FILE__) . "/../../db/account.php");
+    include_once(dirname(__FILE__) . "/../../db/account.php");
 
     $accounts = AccountData::find();
 

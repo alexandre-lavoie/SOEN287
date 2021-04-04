@@ -1,3 +1,9 @@
+<?php
+    /**
+     * @param APP_NAME
+     */
+?>
+
 <html lang="en">
     <head>
         <?php include("../components/head.php") ?>
@@ -12,7 +18,7 @@
                 </div>
                 <div class="col-12 col-md-8 col-lg-10 pb-2">
                     <div class="card p-2">
-                        <h2>Welcome to WEO Dashboard</h2>
+                        <h2>Welcome to <?= $APP_NAME ?> Dashboard</h2>
                         <h6>The best online-grocery website!</h6>
                     </div>
                 </div>

@@ -1,9 +1,19 @@
 <?php
-    include("../db/aisle.php");
-    include("../db/splash.php");
+    include_once("../db/aisle.php");
+    include_once("../db/splash.php");
 
     $aisles = array_values(AisleData::find());
+
+    if(count($aisles) === 0) {
+        $aisles[] = AisleData::default_data();
+    }
+
     $splash_images = array_values(SplashData::find());
+
+    if(count($splash_images) === 0) {
+        $splash_images[] = SplashData::default_data();
+    }
+
     $nav = [
         ['url' => '/', 'name' => 'Home']
     ];

@@ -1,6 +1,5 @@
 <?php
-    include(dirname(__FILE__) . "/../../models/item.php");
-    include(dirname(__FILE__) . "/../../db/item.php");
+    include_once(dirname(__FILE__) . "/../../db/item.php");
 
     $products = ItemData::find();
 

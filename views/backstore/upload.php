@@ -1,5 +1,5 @@
 <?php
-    include(dirname(__FILE__) . "/../../db/upload.php");
+    include_once(dirname(__FILE__) . "/../../db/upload.php");
 
     if(isset($_FILES['xml'])) {
         Upload::xml();

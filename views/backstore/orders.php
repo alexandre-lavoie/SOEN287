@@ -1,5 +1,5 @@
 <?php
-    include(dirname(__FILE__) . "/../../db/order.php");
+    include_once(dirname(__FILE__) . "/../../db/order.php");
 
     $json = OrderData::_GET();
     $orders = $json->orders;

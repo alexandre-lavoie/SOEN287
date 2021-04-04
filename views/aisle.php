@@ -1,10 +1,17 @@
 <?php
-    include("../db/aisle.php");
+    include_once("../db/aisle.php");
 
     $json = AisleData::_GET([$_GET["id"]]);
 
+    if (count($json->aisles) === 0) redirect("/");
+
     $aisle = current($json->aisles);
     $items = array_values($json->items);
+
+    if(count($items) === 0) {
+        $items[] = ItemData::default_data();
+    }
+
     $nav = [
         ['url' => '/', 'name' => 'Home'], 
         ['url' => "/aisle?id=$aisle->id", 'name' => $aisle->name]

@@ -23,4 +23,4 @@ To run the website in a development environment, you will need Docker. You then 
 sudo docker-compose up
 ```
 
-An instance of the website should run at http://locahost. The website will ask you to provide an XML. You can use `sample.xml` as a starting point database.
+An instance of the website should run at http://locahost.

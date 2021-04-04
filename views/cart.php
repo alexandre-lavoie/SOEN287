@@ -53,8 +53,8 @@
 <html lang="en">
     <head>
         <?php include("../components/head.php") ?>
-        <script> const cart = <?= json_encode($cart) ?>; </script>
-        <script src="/public/js/cart.js"></script>
+        <script> let cart = <?= json_encode($cart) ?>; </script>
+        <script src="/public/js/cart.js" defer></script>
     </head>
     <body class="bg-light">
         <?php include("../components/header.php") ?>

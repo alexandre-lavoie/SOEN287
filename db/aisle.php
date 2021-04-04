@@ -3,6 +3,10 @@
     include_once(dirname(__FILE__) . "/item.php");
 
     class AisleData extends ObjectData {
+        public static function default_data() {
+            return new Aisle(-1, "Default Aisle", "Add Aisle in Backstore!", "/public/images/pexels-fernando-arcos-211122.jpg", []);
+        }
+
         public static function _GET($ids = NULL) {
             $json = parent::_GET($ids);
 

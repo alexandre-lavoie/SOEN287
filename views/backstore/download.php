@@ -1,21 +1,3 @@
-<?php
-    include_once(dirname(__FILE__) . "/../../db/item.php");
-
-    if(isset($_POST['price']) && isset($_POST['name'])) {
-        if(isset($_GET['id'])) {
-            ItemData::_PUT();
-        } else {
-            ItemData::_POST();
-        }
-    }
-
-    $item = current(ItemData::find([$_GET['id']]));
-
-    $OBJECT = $item;
-    $NAME = "Product";
-    $FIELDS = ['name', 'description', 'image', 'price'];
-?>
-
 <html lang="en">
     <head>
         <?php include("../components/head.php") ?>
@@ -29,7 +11,13 @@
                     <?php include(dirname(__FILE__) . "/../../components/admin-nav.php") ?>
                 </div>
                 <div class="col-12 col-md-8 col-lg-10 pb-2">
-                    <?php include("../components/admin-editor.php") ?>
+                    <div class="card p-2">
+                        <h2>Download</h2>
+
+                        <hr/>
+
+                        <a href="/api/download/xml">Website XML</a>
+                    </div>
                 </div>
             </div>
         </div>

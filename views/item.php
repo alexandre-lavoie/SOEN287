@@ -3,7 +3,13 @@
     include_once("../db/item.php");
 
     $aisle = current(AisleData::find([$_GET["aisle"]]));
+
+    if(empty($aisle)) redirect('/');
+
     $item = current(ItemData::find([$_GET["id"]]));
+
+    if(empty($item)) redirect('/aisle?id=' . $aisle->id);
+
     $nav = [
         ['url' => '/', 'name' => 'Home'], 
         ['url' => "/aisle?id=$aisle->id", 'name' => $aisle->name],

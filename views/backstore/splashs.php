@@ -1,19 +1,17 @@
 <?php
-    include_once(dirname(__FILE__) . "/../../db/aisle.php");
+    include_once(dirname(__FILE__) . "/../../db/splash.php");
 
-    $aisles = AisleData::find();
+    $splashs = SplashData::find();
 
     if(isset($_POST['delete'])) {
         $id = $_POST['delete'];
 
-        if(AisleData::delete($id)) {
-            unset($aisles[$id]);
+        if(SplashData::delete($id)) {
+            unset($splashs[$id]);
         }
     }
 
-    $aisles = array_values(AisleData::find());
-
-    $URL = "/backstore/aisle";
+    $URL = "/backstore/splash";
 ?>
 
 <html lang="en">
@@ -43,15 +41,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($aisles as $aisle) { ?>
+                                    <?php foreach($splashs as $splash) { ?>
                                         <tr>
-                                            <td><?= $aisle->id ?></td>
-                                            <td><img style="max-width: 75px" src="<?= $aisle->image ?>"></td>
-                                            <td><?= $aisle->name ?></td>
-                                            <td><?= $aisle->description ?></td>
+                                            <td><?= $splash->id ?></td>
+                                            <td><img style="max-width: 75px" src="<?= $splash->image ?>"/></td>
+                                            <td><?= $splash->name ?></td>
+                                            <td><?= $splash->description ?></td>
                                             <td>
                                                 <?php
-                                                    $ID = $aisle->id;
+                                                    $ID = $splash->id;
 
                                                     include(dirname(__FILE__) . "/../../components/admin-table-buttons.php");
                                                 ?>

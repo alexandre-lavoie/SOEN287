@@ -1,6 +1,6 @@
 <?php
-    include(dirname(__FILE__) . "/../../models/itemstack.php");
-    include(dirname(__FILE__) . "/../../db/aisle.php");
+    include_once(dirname(__FILE__) . "/../../models/itemstack.php");
+    include_once(dirname(__FILE__) . "/../../db/aisle.php");
 
     $itemstacks = [];
 

@@ -1,7 +1,7 @@
 <?php
-    include(dirname(__FILE__) . "/../../models/itemstack.php");
-    include(dirname(__FILE__) . "/../../db/cart.php");
-    include(dirname(__FILE__) . "/../../db/order.php");
+    include_once(dirname(__FILE__) . "/../../models/itemstack.php");
+    include_once(dirname(__FILE__) . "/../../db/cart.php");
+    include_once(dirname(__FILE__) . "/../../db/order.php");
 
     if(isset($_POST['time']) && isset($_POST['date'])) {
         $_POST['time'] = $_POST['date'] . ' ' . $_POST['time'];
@@ -61,7 +61,8 @@
     $OBJECT = $order;
     $OBJECT->date = explode(" ", $order->time)[0];
     $OBJECT->time = explode(" ", $order->time)[1];
-    $NAME = "Product";
+    $OBJECT->itemstacks = $itemstacks;
+    $NAME = "Order";
     $FIELDS = ['date', 'time', 'account', 'itemstacks'];
 ?>
 

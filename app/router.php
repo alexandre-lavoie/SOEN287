@@ -2,21 +2,20 @@
     /**
      * @param APP_NAME
      */
-
-    include_once(dirname(__FILE__) . "/auth.php");
-    include_once(dirname(__FILE__) . "/json.php");
+    include_once(dirname(__FILE__) . "/../db/account.php");
 
     function get_base_url() {
         return (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https://" : "http://") . $_SERVER["HTTP_HOST"];
     }
 
     function get_error_path($error) {
-        if($error == "404") {
-            return dirname(__FILE__) . '/../errors/404.php';
-        } else if($error == "401") {
-            return dirname(__FILE__) . '/../errors/401.php';
-        } else {
-            return NULL;
+        switch ($error) {
+            case "404":
+                return dirname(__FILE__) . '/../errors/404.php';
+            case "401":
+                return dirname(__FILE__) . '/../errors/401.php';
+            default:
+                return NULL;
         }
     }
 
@@ -44,21 +43,18 @@
 
             $file = explode('?', end($request_split), 2)[0];
 
-            if ($file == "") {
-                $file = "index";
-            }
+            if ($file == "") $file = "index";
 
-            if ($path == "/") {
-                $path = "";
-            }
+            if ($path == "/") $path = "";
 
             $route_files = [
+                dirname(__FILE__) . "/../routes/" . $path . $file,
                 dirname(__FILE__) . "/../routes/" . $path . $file . ".php",
                 dirname(__FILE__) . "/../routes/" . $path . $file . "/" . "index.php"
-            ]; 
+            ];
 
             foreach($route_files as $route_file) {
-                if (!file_exists($route_file)) continue;
+                if (!file_exists($route_file) || is_dir($route_file)) continue;
 
                 header('Content-Type: application/json');
 
@@ -67,6 +63,8 @@
 
             return get_error_path("404");
         } else {
+            if(count(AccountData::find()) === 0) return dirname(__FILE__) . "/../setup/index.php";
+
             if ($request_split[0] === "backstore") requires_account();
 
             $path_split = array_slice($request_split, 0, -1, true);
@@ -79,21 +77,15 @@
 
             $name = basename($uri_no_args, "." . $ext);
 
-            if ($name == "") {
-                $name = "index";
-            }
-
+            if ($name == "") $name = "index";
+            
             global $PAGE_TITLE, $APP_NAME;
 
             $PAGE_TITLE = ucfirst($name) . " | " . $APP_NAME;
         
-            if ($ext == "") {
-                $ext = "php";
-            }
-        
-            if ($ext != "php") {
-                return get_error_path("404");
-            }
+            if ($ext == "") $ext = "php";
+
+            if ($ext != "php") return get_error_path("404");
 
             $view_files = [
                 dirname(__FILE__) . "/../views/" . $path . $name . "." . $ext,
@@ -109,6 +101,4 @@
             return get_error_path("404");
         }
     }
-
-    include route($_SERVER["REQUEST_URI"]);
 ?>

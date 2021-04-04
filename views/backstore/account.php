@@ -1,6 +1,6 @@
 <?php 
-    include(dirname(__FILE__) . "/../../models/account.php");
-    include(dirname(__FILE__) . "/../../db/account.php");
+    include_once(dirname(__FILE__) . "/../../models/account.php");
+    include_once(dirname(__FILE__) . "/../../db/account.php");
 
     if(isset($_POST['name'])) {
         if(isset($_GET['id'])) {
