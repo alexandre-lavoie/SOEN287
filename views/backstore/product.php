@@ -1,6 +1,4 @@
 <?php
-    requires_admin();
-
     include(dirname(__FILE__) . "/../../db/item.php");
 
     if(isset($_POST['price']) && isset($_POST['name'])) {

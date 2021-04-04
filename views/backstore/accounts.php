@@ -1,6 +1,4 @@
 <?php
-    requires_admin();
-
     include(dirname(__FILE__) . "/../../db/account.php");
 
     $accounts = AccountData::find();

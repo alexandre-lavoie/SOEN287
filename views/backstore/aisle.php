@@ -1,6 +1,4 @@
 <?php
-    requires_admin();
-
     include(dirname(__FILE__) . "/../../models/itemstack.php");
     include(dirname(__FILE__) . "/../../db/aisle.php");
 

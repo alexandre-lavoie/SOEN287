@@ -1,6 +1,4 @@
-<?php 
-    requires_admin();
-
+<?php
     include(dirname(__FILE__) . "/../../models/itemstack.php");
     include(dirname(__FILE__) . "/../../db/cart.php");
     include(dirname(__FILE__) . "/../../db/order.php");

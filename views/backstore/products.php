@@ -1,6 +1,4 @@
 <?php
-    requires_admin();
-
     include(dirname(__FILE__) . "/../../models/item.php");
     include(dirname(__FILE__) . "/../../db/item.php");
 

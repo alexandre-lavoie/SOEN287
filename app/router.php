@@ -3,6 +3,7 @@
      * @param APP_NAME
      */
 
+    include_once(dirname(__FILE__) . "/auth.php");
     include_once(dirname(__FILE__) . "/json.php");
 
     function get_base_url() {
@@ -36,7 +37,7 @@
     function route($uri) {
         $request_split = explode("/", substr($uri, 1));
 
-        if ($request_split[0] == "api") {
+        if ($request_split[0] === "api") {
             $path_split = array_slice($request_split, 1, -1, true);
 
             $path = join("/", $path_split) . "/";
@@ -66,6 +67,8 @@
 
             return get_error_path("404");
         } else {
+            if ($request_split[0] === "backstore") requires_account();
+
             $path_split = array_slice($request_split, 0, -1, true);
 
             $path = join("/", $path_split) . "/";
