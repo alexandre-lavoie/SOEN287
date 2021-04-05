@@ -17,7 +17,7 @@
     <body class="bg-light">
         <br/><br/>
         <h3 style="text-align: center">Hello World</h3>
-        <h5 style="text-align: center">Create an account to get started.</h5>
+        <h5 style="text-align: center">Create an admin account to get started.</h5>
         <br/><br/>
 
         <div class="d-flex justify-content-center align-items-center container">

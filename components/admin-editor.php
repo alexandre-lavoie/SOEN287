@@ -4,6 +4,9 @@
      * @param FIELDS
      * @param NAME
      */
+    include_once(dirname(__FILE__) . "/../db/account.php");
+
+    $accounts = AccountData::find();
 ?>
 
 <div class="card p-2">
@@ -20,8 +23,21 @@
             <?php if($field === 'itemstacks') { 
                 $itemstacks = $OBJECT->itemstacks;
             ?>
-                <label for="items" class="pb-2 pt-2">Items</label>
+                <label for="items" class="pb-2 pt-2">Products</label>
                 <?php include(dirname(__FILE__) . '/items.php') ?>
+            <?php } else if($field === 'account') { ?>
+                <label for="<?= $field ?>" class="pb-2 pt-2"><?= ucwords($field) ?></label>
+                <select
+                    id="<?= $field ?>"
+                    name="<?= $field ?>" 
+                    value="<?= isset($OBJECT->{$field}) ? $OBJECT->{$field} : '' ?>" 
+                    class="form-select"
+                >
+                    <option>Select Account</option>
+                    <?php foreach($accounts as $account) { ?>
+                        <option value="<?= $account->id ?>" <?= $OBJECT->{$field} === $account->id ? "selected" : "" ?>><?= $account->id ?> - <?= $account->name ?></option>
+                    <?php } ?>
+                </select>
             <?php } else { ?>
                 <label for="<?= $field ?>" class="pb-2 pt-2"><?= ucwords($field) ?></label>
                 <input 
