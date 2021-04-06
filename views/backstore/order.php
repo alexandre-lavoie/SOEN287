@@ -54,6 +54,11 @@
 
     $json = OrderData::_GET([$_GET['id']]);
     $order = current($json->orders);
+
+    if (empty($order)) {
+        $order = new stdClass();
+    }
+
     $cart = $json->carts[$order->cart];
     $itemstacks = $cart->itemstacks;
     $items = $json->items;
