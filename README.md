@@ -24,3 +24,7 @@ sudo docker-compose up
 ```
 
 An instance of the website should run at http://locahost.
+
+## API
+
+To facilitate usage/development of the API, there is GraphQL port of the REST API that can be found in the `/graphql` folder.
