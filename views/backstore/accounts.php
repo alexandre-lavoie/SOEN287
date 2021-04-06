@@ -48,7 +48,7 @@
                                         <tr>
                                             <td><?= $account->id ?></td>
                                             <td><?= explode(" ", $account->name)[0] ?></td>
-                                            <td><?= explode(" ", $account->name)[1] ?></td>
+                                            <td><?= implode(" ", array_slice(explode(" ", $account->name), 1)) ?></td>
                                             <td><?= $account->email ?></td>
                                             <td><?= $account->address ?></td>
                                             <td>
