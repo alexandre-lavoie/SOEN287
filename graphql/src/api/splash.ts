@@ -1,6 +1,13 @@
 import { ObjectType, Field, ID, Resolver, Query, Arg, InputType, Mutation, FieldResolver, Root, createUnionType } from 'type-graphql';
 import { DELETE, Endpoint, GET, POST, PUT } from './rest';
 
+export interface RESTSplash {
+    id: string
+    name: string
+    description: string
+    image: string
+}
+
 @ObjectType()
 export default class Splash {
     @Field(type => ID)
@@ -45,43 +52,48 @@ export class SplashUpdate {
 
 @Resolver(of => Splash)
 export class SplashResolver {
+    public restToQL(data: RESTSplash): Splash {
+        return {
+            ...data,
+            title: data.name
+        }
+    }
+
+    public qlToREST(splash: Splash): RESTSplash {
+        return {
+            ...splash,
+            name: splash.title
+        }
+    }
+
     @Query(returns => Splash)
     async splash(@Arg("id") id: string): Promise<Splash> {
         const json = await GET(Endpoint.splashs, { id });
-        const splash = json.splashs[id] as any;
 
-        return splash ? { ...splash, title: splash.name } : undefined;
+        return this.restToQL(json.splashs[id] as any);
     }
 
     @Query(returns => [Splash])
     async splashs(): Promise<Splash[]> {
         const json = await GET(Endpoint.splashs);
 
-        return Object.values(json.splashs).map((splash: any) => ({ ...splash, title: splash.name }));
+        return Object.values(json.splashs).map((splash: any) => this.restToQL(splash));
     }
 
     @Mutation(returns => Splash)
-    async createSplash(@Arg("input") input: SplashCreate) {
-        const splash = await POST(Endpoint.splashs, { ...input, name: input.title });
-
-        return splash ? { ...splash, title: splash.name } : undefined;
+    async createSplash(@Arg("input") input: SplashCreate): Promise<Splash> {
+        return this.restToQL(await POST(Endpoint.splashs, this.qlToREST(input as any)));
     }
 
     @Mutation(returns => Splash)
-    async updateSplash(@Arg("input") input: SplashUpdate) {
-        const splash = await PUT(Endpoint.splashs, { ...input, name: input.title });
+    async updateSplash(@Arg("input") input?: SplashUpdate): Promise<Splash> {
+        if (input == null) return null;
 
-        return splash ? { ...splash, title: splash.name } : undefined;
+        return this.restToQL(await PUT(Endpoint.splashs, this.qlToREST(input as any)));
     }
 
     @Mutation(returns => Splash)
-    async deleteSplash(@Arg("id") id: string) {
-        const splash = await this.splash(id);
-
-        if (splash == undefined) return undefined;
-
-        await DELETE(Endpoint.splashs, splash.id);
-
-        return splash;
+    async deleteSplash(@Arg("id") id: string): Promise<Splash> {
+        return this.restToQL(await DELETE(Endpoint.splashs, id));
     }
 }

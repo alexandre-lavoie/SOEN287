@@ -1,7 +1,15 @@
 import { ObjectType, Field, ID, Resolver, Query, Arg, InputType, Mutation, FieldResolver, Root, createUnionType } from 'type-graphql';
 import Cart, { CartResolver, CartUpdate } from './cart';
 import Order, { OrderResolver } from './order';
-import { GET, Endpoint, DELETE, PUT, POST } from './rest';
+import { GET, Endpoint, DELETE, PUT, POST, IREST } from './rest';
+
+export interface RESTAccount extends IREST {
+    id: string
+    name: string
+    password?: string
+    address: string
+    cart: string
+}
 
 @ObjectType()
 export default class Account {
@@ -65,6 +73,20 @@ export class AccountUpdate {
 
 @Resolver(of => Account)
 export class AccountResolver {
+    public restToQL(data: RESTAccount): Account {
+        return { 
+            ...data,
+            cart: { id: data.cart }
+        } as any
+    }
+
+    public qlToREST(account: Account): RESTAccount {
+        return {
+            ...account,
+            cart: account.cart ? account.cart.id : account.cart
+        } as any
+    }
+
     @FieldResolver()
     async cart(@Root() account: Account): Promise<Cart> {
         return new CartResolver().cart(account.cart.id);
@@ -80,42 +102,33 @@ export class AccountResolver {
     @Query(returns => Account)
     async account(@Arg("id") id: string): Promise<Account> {
         const json = await GET(Endpoint.accounts, { id });
-        const account = json.accounts[id] as any;
 
-        return { ...account, cart: { id: account.cart } };
+        return this.restToQL(json.accounts[id] as any);
     }
 
     @Query(returns => [Account])
     async accounts(): Promise<Account[]> {
         const json = await GET(Endpoint.accounts);
         
-        return Object.values(json.accounts).map((account: any) => ({ ...account, cart: { id: account.cart }}));
-    }
-
-        /**
-     * TODO: Implement.
-     */
-    @Mutation(returns => Order)
-    async createAccount(@Arg("input") input: AccountCreate) {
-        return await POST(Endpoint.accounts, input);
-    }
-
-    /**
-     * TODO: Implement.
-     */
-    @Mutation(returns => Account)
-    async updateAccount(@Arg("input") input: AccountUpdate) {
-        return await PUT(Endpoint.accounts, input);
+        return Object.values(json.accounts).map((account: any) => this.restToQL(account));
     }
 
     @Mutation(returns => Account)
-    async deleteAccount(@Arg("id") id: string) {
-        const account = await this.account(id);
+    async createAccount(@Arg("input") input: AccountCreate): Promise<Account> {
+        return this.restToQL(await POST(Endpoint.accounts, this.qlToREST(input as any)));
+    }
 
-        if (account == undefined) return undefined;
+    @Mutation(returns => Account)
+    async updateAccount(@Arg("input") input?: AccountUpdate): Promise<Account> {
+        if (input == null) return null;
 
-        await DELETE(Endpoint.accounts, account.id);
+        await new CartResolver().updateCart(input.cart);
 
-        return account;
+        return this.restToQL(await PUT(Endpoint.accounts, this.qlToREST(input as any)));
+    }
+
+    @Mutation(returns => Account)
+    async deleteAccount(@Arg("id") id: string): Promise<Account> {
+        return this.restToQL(await DELETE(Endpoint.accounts, id));
     }
 }
